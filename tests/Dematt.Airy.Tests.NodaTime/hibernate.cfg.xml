@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<hb:hibernate-configuration xmlns:hb="urn:nhibernate-configuration-2.2">
+  <hb:session-factory>
+    <hb:property name="connection.connection_string">
+      Data Source=.\SQL2014; Initial Catalog=NhibernateNodaTime; Integrated Security=True; Persist Security Info=True;
+    </hb:property>
+    <hb:property name="dialect">
+      NHibernate.Dialect.MsSql2012Dialect
+    </hb:property>
+    <hb:property name="connection.provider">
+      NHibernate.Connection.DriverConnectionProvider
+    </hb:property>
+    <hb:property name="connection.driver_class">
+      NHibernate.Driver.SqlClientDriver
+    </hb:property>
+    <hb:property name="show_sql">false</hb:property>
+    <hb:property name="connection.release_mode">auto</hb:property>
+    <hb:property name="adonet.batch_size">500</hb:property>
+  </hb:session-factory>
+</hb:hibernate-configuration>
