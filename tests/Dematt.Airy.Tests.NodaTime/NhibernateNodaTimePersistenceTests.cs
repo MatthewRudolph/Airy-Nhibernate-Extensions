@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
 using Dematt.Airy.Tests.NodaTime.Entities;
 using NHibernate;
+using NHibernate.Linq;
+using NodaTime;
 using NUnit.Framework;
 
 namespace Dematt.Airy.Tests.NodaTime
@@ -10,8 +13,6 @@ namespace Dematt.Airy.Tests.NodaTime
         private static SessionFactoryProvider _sessionFactoryProvider;
 
         private static ISessionFactory _sessionFactory;
-
-        private ISession _session;
 
         /// <summary>
         /// Creates an NHibernate Session factory and builds a fresh database schema.
@@ -36,35 +37,86 @@ namespace Dematt.Airy.Tests.NodaTime
             _sessionFactoryProvider = null;
         }
 
-        /// <summary>
-        /// Sets up the required objects and starts a transaction before each test.
-        /// </summary>        
-        [SetUp]
-        public void BeforeEachTest()
+        [Test]
+        public void CanPersiste_NodaTime_OffsetDateTime()
         {
-            // Create the user service and it's dependencies.
-            _session = _sessionFactory.OpenSession();
-            _session.BeginTransaction();
-        }
+            using (ISession session = _sessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
+                Instant now = SystemClock.Instance.Now;
+                ZonedDateTime zonedNowDateTime = now.InZone(timeZone);
 
-        /// <summary>
-        /// Commits the transactions after each test.
-        /// </summary>
-        [TearDown]
-        public void AfterEachTest()
-        {
-            _session.Transaction.Commit();
+
+                var testEvent = new TestEvent
+                {
+                    Description = "CanPersiste_NodaTime_OffsetDateTime",
+                    SystemDateTimeOffset = DateTimeOffset.Now,
+                    FinishOffsetDateTime = new OffsetDateTime(zonedNowDateTime.LocalDateTime, zonedNowDateTime.Offset)
+                };
+                session.Save(testEvent);
+                transaction.Commit();
+            }
         }
 
         [Test]
-        public void CanSaveANewTestEvent()
+        public void CanPersiste_NodaTime_CalculatedOffsetDateTime()
         {
-            var testEvent = new TestEvent
+            using (ISession session = _sessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
             {
-                Description = "CanSaveANewTestEvent",
-                SystemDateTimeOffset = DateTimeOffset.Now
-            };
-            _session.Save(testEvent);
+                var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
+                Instant now = SystemClock.Instance.Now;
+                ZonedDateTime zonedNowDateTime = now.InZone(timeZone);
+                var zonedFinishDateTime = zonedNowDateTime.Plus(Duration.FromMinutes(60));
+
+                var testEvent = new TestEvent
+                {
+                    Description = "CanPersiste_NodaTime_CalculatedOffsetDateTime",
+                    SystemDateTimeOffset = DateTimeOffset.Now,
+                    StartOffsetDateTime = new OffsetDateTime(zonedNowDateTime.LocalDateTime, zonedNowDateTime.Offset),
+                    FinishOffsetDateTime =
+                        new OffsetDateTime(zonedFinishDateTime.LocalDateTime, zonedFinishDateTime.Offset)
+                };
+                session.Save(testEvent);
+                transaction.Commit();
+            }
+        }
+
+
+        [Test]
+        public void CanQuery_NodaTime_OffsetDateTimeEquals()
+        {
+            var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
+            Instant now = SystemClock.Instance.Now;
+            ZonedDateTime zonedNowDateTime = now.InZone(timeZone);
+
+            var zonedFinishDateTime = zonedNowDateTime.Plus(Duration.FromMinutes(60));
+            var offsetFinishTime = new OffsetDateTime(zonedFinishDateTime.LocalDateTime, zonedFinishDateTime.Offset);
+
+            var testEvent = new TestEvent
+                {
+                    Description = "CanPersiste_NodaTime_CalculatedOffsetDateTime",
+                    SystemDateTimeOffset = DateTimeOffset.Now,
+                    StartOffsetDateTime = new OffsetDateTime(zonedNowDateTime.LocalDateTime, zonedNowDateTime.Offset),
+                    FinishOffsetDateTime = offsetFinishTime
+                };
+
+            using (ISession session = _sessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                session.Save(testEvent);
+                transaction.Commit();
+            }
+
+            using (ISession session = _sessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                var query = session.Query<TestEvent>().Where(x => x.FinishOffsetDateTime == offsetFinishTime);
+                var retrievedEvent = query.SingleOrDefault();
+                Assert.That(testEvent.Id, Is.EqualTo(retrievedEvent.Id));
+                transaction.Commit();
+            }
         }
     }
 }

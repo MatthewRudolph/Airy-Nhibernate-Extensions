@@ -85,15 +85,23 @@ namespace Dematt.Airy.Tests.NodaTime
                     });
                     c.Property(p => p.Description, m =>
                     {
-                        m.Length(50);
+                        m.Length(100);
                     });
-                    c.Property(p => p.NodaOffsetDateTime, m =>
+                    c.Property(p => p.StartOffsetDateTime, m =>
+                    {
+                        m.Type<OffsetDateTimeType>();
+                    });
+                    c.Property(p => p.FinishOffsetDateTime, m =>
                     {
                         m.Type<OffsetDateTimeType>();
                     });
                 });
+
                 // Build and the mappings for the test domain entities.
                 _configuration.AddMapping(domainMapper.CompileMappingFor(domainTypes));
+
+                //_configuration.LinqToHqlGeneratorsRegistry<LinqToHqlGeneratorsRegistry>();
+
                 _configuration.DataBaseIntegration(x =>
                 {
                     x.LogSqlInConsole = true;

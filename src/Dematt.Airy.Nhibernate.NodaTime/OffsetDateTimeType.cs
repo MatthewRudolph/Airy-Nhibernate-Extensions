@@ -26,12 +26,14 @@ namespace Dematt.Airy.Nhibernate.NodaTime
 
         public new bool Equals(object x, object y)
         {
-            return object.Equals(x, y);
+            if (x == null && y == null) return true;
+            if (x == null || y == null) return false;
+            return ((OffsetDateTime)x).ToInstant() == ((OffsetDateTime)y).ToInstant();
         }
 
         public int GetHashCode(object x)
         {
-            return x == null ? 0 : x.GetHashCode();
+            return x == null ? 0 : ((OffsetDateTime)x).ToInstant().GetHashCode();
         }
 
         public object NullSafeGet(IDataReader rs, string[] names, object owner)

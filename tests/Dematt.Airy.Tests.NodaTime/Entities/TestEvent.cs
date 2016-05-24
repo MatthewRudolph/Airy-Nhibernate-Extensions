@@ -10,6 +10,8 @@ namespace Dematt.Airy.Tests.NodaTime.Entities
 
         public virtual DateTimeOffset SystemDateTimeOffset { get; set; }
 
-        public virtual OffsetDateTime NodaOffsetDateTime { get; set; }
+        public virtual OffsetDateTime StartOffsetDateTime { get; set; }
+
+        public virtual OffsetDateTime FinishOffsetDateTime { get; set; }
     }
 }
