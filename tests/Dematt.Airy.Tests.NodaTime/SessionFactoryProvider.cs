@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using Dematt.Airy.Nhibernate.NodaTime;
 using Dematt.Airy.Tests.NodaTime.Entities;
 using NHibernate;
 using NHibernate.Cfg;
@@ -75,6 +76,7 @@ namespace Dematt.Airy.Tests.NodaTime
                 var domainMapper = new ConventionModelMapper();
 
                 // Customise the mapping before adding the mappings to the configuration.
+                //domainMapper.BeforeMapProperty += NodaTimeMapperHelper.ApplyOffsetDateTimeType;
                 domainMapper.Class<TestEvent>(c =>
                 {
                     c.Id(p => p.Id, m =>
@@ -85,10 +87,17 @@ namespace Dematt.Airy.Tests.NodaTime
                     {
                         m.Length(50);
                     });
+                    c.Property(p => p.NodaOffsetDateTime, m =>
+                    {
+                        m.Type<OffsetDateTimeType>();
+                    });
                 });
                 // Build and the mappings for the test domain entities.
                 _configuration.AddMapping(domainMapper.CompileMappingFor(domainTypes));
-
+                _configuration.DataBaseIntegration(x =>
+                {
+                    x.LogSqlInConsole = true;
+                });
 
                 DefaultSessionFactory = _configuration.BuildSessionFactory();
             }

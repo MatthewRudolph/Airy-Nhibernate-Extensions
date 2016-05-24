@@ -1,5 +1,6 @@
 ﻿using System;
 using Dematt.Airy.Core;
+using NodaTime;
 
 namespace Dematt.Airy.Tests.NodaTime.Entities
 {
@@ -8,5 +9,7 @@ namespace Dematt.Airy.Tests.NodaTime.Entities
         public virtual string Description { get; set; }
 
         public virtual DateTimeOffset SystemDateTimeOffset { get; set; }
+
+        public virtual OffsetDateTime NodaOffsetDateTime { get; set; }
     }
 }
