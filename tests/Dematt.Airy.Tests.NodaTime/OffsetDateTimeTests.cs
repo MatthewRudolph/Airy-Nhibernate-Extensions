@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Dematt.Airy.Tests.NodaTime.Entities;
 using NHibernate;
@@ -10,6 +11,9 @@ namespace Dematt.Airy.Tests.NodaTime
 {
     public class OffsetDateTimeTests : PersistenceTest
     {
+        /// <summary>
+        /// Can we write a OffsetDateTime stored as a DateTimeOffset.
+        /// </summary>
         [Test]
         public void Can_Write_OffsetDateTime_Stored_As_DateTimeOffset()
         {
@@ -32,6 +36,9 @@ namespace Dematt.Airy.Tests.NodaTime
             }
         }
 
+        /// <summary>
+        /// Can we write a calculated OffsetDateTime stored as a DateTimeOffset.
+        /// </summary>
         [Test]
         public void Can_Write_Calculated_OffsetDateTime_Stored_As_DateTimeOffset()
         {
@@ -39,10 +46,6 @@ namespace Dematt.Airy.Tests.NodaTime
             using (ITransaction transaction = session.BeginTransaction())
             {
                 var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
-                var tzdbTimeZones = DateTimeZoneProviders.Tzdb.Ids;
-                var longestTzdb = tzdbTimeZones.Aggregate("", (max, cur) => max.Length > cur.Length ? max : cur);
-                var bclTimeZones = DateTimeZoneProviders.Bcl.Ids;
-                var longestBcl = bclTimeZones.Aggregate("", (max, cur) => max.Length > cur.Length ? max : cur);
                 Instant now = SystemClock.Instance.Now;
                 ZonedDateTime zonedNowDateTime = now.InZone(timeZone);
                 var zonedFinishDateTime = zonedNowDateTime.Plus(Duration.FromMinutes(60));
@@ -60,6 +63,9 @@ namespace Dematt.Airy.Tests.NodaTime
             }
         }
 
+        /// <summary>
+        /// Can we write and read a OffsetDateTime stored as a DateTimeOffset.
+        /// </summary>
         [Test]
         public void Can_Write_And_Read_OffsetDateTime_Stored_As_DateTimeOffset()
         {
@@ -91,8 +97,21 @@ namespace Dematt.Airy.Tests.NodaTime
             Assert.That(retrievedEvent, Is.EqualTo(testEvent));
         }
 
-
+        /// <summary>
+        /// Can we query by equals a OffsetDateTime stored as DateTimeOffset.
+        /// </summary>
+        /// <remarks>
+        /// WARNING: Microsoft SQL Server and the BCL have different equals logic of DateTimeOffsets compared to that if the NodaTime OffsetDateTime equals logic.
+        /// For Microsoft SQL Server and the BCL (DateTimeOffset):
+        ///     Before it performs the comparison, both DateTimeOffset objects are converted to Coordinated Universal Time (UTC). 
+        ///     This is equivalent to the following: return first.UtcDateTime == second.UtcDateTime;
+        /// For NodaTime (OffsetDateTime)
+        ///     Both the LocalDateTime and the Offset must both be the same for two OffsetDateTime objects to be considered equals.
+        ///     This is true even if the two objects even though having different LocalDateTime and the Offset values point to the same Instant in time.
+        /// This means that Linq/SQL queries may give different results to C# compressions of objects.
+        /// </remarks>
         [Test]
+        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public void Can_Query_By_Equals_OffsetDateTime_Stored_As_DateTimeOffset()
         {
             var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
@@ -122,6 +141,7 @@ namespace Dematt.Airy.Tests.NodaTime
             {
                 var query = session.Query<OffsetDateTimeTestEntity>().Where(x => x.FinishOffsetDateTime == offsetFinishTime);
                 var retrievedEvent = query.SingleOrDefault();
+                Assert.That(testEvent, !Is.Null);
                 Assert.That(testEvent.Id, Is.EqualTo(retrievedEvent.Id));
                 transaction.Commit();
             }
