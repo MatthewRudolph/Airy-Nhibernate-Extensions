@@ -8,5 +8,7 @@ namespace Dematt.Airy.Tests.NodaTime.Entities
         public virtual string Description { get; set; }
 
         public virtual DateTimeZone StartDateTimeZone { get; set; }
+
+        public virtual DateTimeZone FinishDateTimeZone { get; set; }
     }
 }

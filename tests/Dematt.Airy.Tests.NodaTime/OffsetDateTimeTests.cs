@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Dematt.Airy.Tests.NodaTime.Entities;
 using NHibernate;
@@ -114,7 +113,6 @@ namespace Dematt.Airy.Tests.NodaTime
         /// This means that Linq/SQL queries may give different results to C# compressions of objects.
         /// </remarks>
         [Test]
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public void Can_Query_By_Equals_OffsetDateTime_Stored_As_DateTimeOffset()
         {
             var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
@@ -126,7 +124,7 @@ namespace Dematt.Airy.Tests.NodaTime
 
             var testEvent = new OffsetDateTimeTestEntity
                 {
-                    Description = "CCan_Query_By_Equals_OffsetDateTime_Stored_As_DateTimeOffset",
+                    Description = "Can_Query_By_Equals_OffsetDateTime_Stored_As_DateTimeOffset",
                     SystemDateTimeOffset = DateTimeOffset.Now,
                     StartOffsetDateTime = new OffsetDateTime(zonedNowDateTime.LocalDateTime, zonedNowDateTime.Offset),
                     FinishOffsetDateTime = offsetFinishTime
@@ -146,7 +144,7 @@ namespace Dematt.Airy.Tests.NodaTime
                 var retrievedEvent = query.SingleOrDefault();
                 transaction.Commit();
                 Assert.That(testEvent, Is.Not.Null);
-                Assert.That(testEvent.Id, Is.EqualTo(retrievedEvent.Id));
+                Assert.That(testEvent, Is.EqualTo(retrievedEvent));
             }
         }
 
@@ -156,9 +154,6 @@ namespace Dematt.Airy.Tests.NodaTime
         [Test]
         public void Can_Write_And_Read_OffsetDateTimeNullable_Stored_As_DateTimeOffset()
         {
-            var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
-            Instant now = SystemClock.Instance.Now;
-            ZonedDateTime zonedNowDateTime = now.InZone(timeZone);
             var testEvent = new OffsetDateTimeTestEntity
             {
                 Description = "Can_Write_And_Read_OffsetDateTime_Stored_As_DateTimeOffset",

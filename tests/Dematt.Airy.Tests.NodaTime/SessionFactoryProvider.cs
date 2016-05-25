@@ -92,8 +92,12 @@ namespace Dematt.Airy.Tests.NodaTime
                     {
                         m.Type<DateTimeZoneTzdbType>();
                     });
+                    c.Property(p => p.FinishDateTimeZone, m =>
+                    {
+                        m.Type<DateTimeZoneTzdbType>();
+                    });
                 });
-                
+
                 //domainMapper.BeforeMapProperty += NodaTimeMapperHelper.ApplyOffsetDateTimeType;
                 domainMapper.Class<OffsetDateTimeTestEntity>(c =>
                 {
