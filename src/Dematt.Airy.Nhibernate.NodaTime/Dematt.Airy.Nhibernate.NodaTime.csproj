@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\DateTimeOffsetExtensions.cs" />
     <Compile Include="NodaTimeMapperHelper.cs" />
     <Compile Include="OffsetDateTimeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

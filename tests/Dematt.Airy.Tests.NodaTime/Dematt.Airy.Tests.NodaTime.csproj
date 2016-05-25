@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DateTimeOffsetTests.cs" />
     <Compile Include="OneTimeSetup.cs" />
     <Compile Include="DateTimeZoneTest.cs" />
     <Compile Include="Entities\OffsetDateTimeTestEntity.cs" />
