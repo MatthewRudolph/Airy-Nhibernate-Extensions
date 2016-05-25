@@ -17,7 +17,7 @@ namespace Dematt.Airy.Tests.NodaTime
             string configFile = SessionFactoryProvider.GetFullPathForContentFile("hibernate.cfg.xml");
             SessionFactoryProvider = new SessionFactoryProvider(configFile);
             SessionFactory = SessionFactoryProvider.DefaultSessionFactory;
-            SessionFactoryProvider.BuildSchema();
+            //SessionFactoryProvider.BuildSchema();
         }
 
         /// <summary>

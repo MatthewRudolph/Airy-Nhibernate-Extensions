@@ -54,7 +54,7 @@
     <Compile Include="NodaTimeMapperHelper.cs" />
     <Compile Include="OffsetDateTimeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ZonedDateTimeType.cs" />
+    <Compile Include="DateTimeZoneTzdbType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

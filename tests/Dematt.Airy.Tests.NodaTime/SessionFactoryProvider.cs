@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Dematt.Airy.Nhibernate.NodaTime;
 using Dematt.Airy.Tests.NodaTime.Entities;
@@ -72,10 +73,27 @@ namespace Dematt.Airy.Tests.NodaTime
             {
 
                 // Get the domain entities to map and a mapper to map them.
-                var domainTypes = new[] { typeof(OffsetDateTimeTestEntity) };
+                var domainType = typeof(DateTimeZoneTestEntity);
+                var domainTypes = domainType.Assembly.GetTypes().Where(t => t.IsClass && t.Namespace == domainType.Namespace);
                 var domainMapper = new ConventionModelMapper();
 
                 // Customise the mapping before adding the mappings to the configuration.
+                domainMapper.Class<DateTimeZoneTestEntity>(c =>
+                {
+                    c.Id(p => p.Id, m =>
+                    {
+                        m.Generator(Generators.Native);
+                    });
+                    c.Property(p => p.Description, m =>
+                    {
+                        m.Length(100);
+                    });
+                    c.Property(p => p.StartDateTimeZone, m =>
+                    {
+                        m.Type<DateTimeZoneTzdbType>();
+                    });
+                });
+                
                 //domainMapper.BeforeMapProperty += NodaTimeMapperHelper.ApplyOffsetDateTimeType;
                 domainMapper.Class<OffsetDateTimeTestEntity>(c =>
                 {
