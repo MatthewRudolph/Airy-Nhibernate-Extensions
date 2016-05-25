@@ -24,7 +24,6 @@ namespace Dematt.Airy.Tests.NodaTime
                 Instant now = SystemClock.Instance.Now;
                 ZonedDateTime zonedNowDateTime = now.InZone(timeZone);
 
-
                 var testEvent = new OffsetDateTimeTestEntity
                 {
                     Description = "Can_Write_OffsetDateTime_Stored_As_DateTimeOffset",
@@ -33,6 +32,8 @@ namespace Dematt.Airy.Tests.NodaTime
                 };
                 session.Save(testEvent);
                 transaction.Commit();
+
+                Assert.That(testEvent.Id, Is.Not.Null);
             }
         }
 
@@ -60,6 +61,8 @@ namespace Dematt.Airy.Tests.NodaTime
                 };
                 session.Save(testEvent);
                 transaction.Commit();
+
+                Assert.That(testEvent.Id, Is.Not.Null);
             }
         }
 
@@ -141,10 +144,45 @@ namespace Dematt.Airy.Tests.NodaTime
             {
                 var query = session.Query<OffsetDateTimeTestEntity>().Where(x => x.FinishOffsetDateTime == offsetFinishTime);
                 var retrievedEvent = query.SingleOrDefault();
-                Assert.That(testEvent, !Is.Null);
+                transaction.Commit();
+                Assert.That(testEvent, Is.Not.Null);
                 Assert.That(testEvent.Id, Is.EqualTo(retrievedEvent.Id));
+            }
+        }
+
+        /// <summary>
+        /// Can we write and read a OffsetDateTime stored as a DateTimeOffset.
+        /// </summary>
+        [Test]
+        public void Can_Write_And_Read_OffsetDateTimeNullable_Stored_As_DateTimeOffset()
+        {
+            var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
+            Instant now = SystemClock.Instance.Now;
+            ZonedDateTime zonedNowDateTime = now.InZone(timeZone);
+            var testEvent = new OffsetDateTimeTestEntity
+            {
+                Description = "Can_Write_And_Read_OffsetDateTime_Stored_As_DateTimeOffset",
+                SystemDateTimeOffset = DateTimeOffset.Now,
+                StartOffsetDateTime = null,
+            };
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                session.Save(testEvent);
                 transaction.Commit();
             }
+
+            OffsetDateTimeTestEntity retrievedEvent;
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                retrievedEvent = session.Get<OffsetDateTimeTestEntity>(testEvent.Id);
+                transaction.Commit();
+            }
+
+            Assert.That(retrievedEvent, Is.EqualTo(testEvent));
+            Assert.That(retrievedEvent.StartOffsetDateTime, Is.EqualTo(null));
         }
     }
 }
