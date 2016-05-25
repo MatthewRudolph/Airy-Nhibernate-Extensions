@@ -29,7 +29,7 @@ namespace Dematt.Airy.Tests.NodaTime
                 {
                     Description = "Can_Write_OffsetDateTime_Stored_As_DateTimeOffset",
                     SystemDateTimeOffset = DateTimeOffset.Now,
-                    FinishOffsetDateTime = new OffsetDateTime(zonedNowDateTime.LocalDateTime, zonedNowDateTime.Offset)
+                    StartOffsetDateTime = new OffsetDateTime(zonedNowDateTime.LocalDateTime, zonedNowDateTime.Offset)
                 };
                 session.Save(testEvent);
                 transaction.Commit();
@@ -76,7 +76,7 @@ namespace Dematt.Airy.Tests.NodaTime
             {
                 Description = "Can_Write_And_Read_OffsetDateTime_Stored_As_DateTimeOffset",
                 SystemDateTimeOffset = DateTimeOffset.Now,
-                FinishOffsetDateTime = new OffsetDateTime(zonedNowDateTime.LocalDateTime, zonedNowDateTime.Offset)
+                StartOffsetDateTime = new OffsetDateTime(zonedNowDateTime.LocalDateTime, zonedNowDateTime.Offset)
             };
 
             using (ISession session = SessionFactory.OpenSession())
