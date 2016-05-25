@@ -72,12 +72,12 @@ namespace Dematt.Airy.Tests.NodaTime
             {
 
                 // Get the domain entities to map and a mapper to map them.
-                var domainTypes = new[] { typeof(TestEvent) };
+                var domainTypes = new[] { typeof(OffsetDateTimeTestEntity) };
                 var domainMapper = new ConventionModelMapper();
 
                 // Customise the mapping before adding the mappings to the configuration.
                 //domainMapper.BeforeMapProperty += NodaTimeMapperHelper.ApplyOffsetDateTimeType;
-                domainMapper.Class<TestEvent>(c =>
+                domainMapper.Class<OffsetDateTimeTestEntity>(c =>
                 {
                     c.Id(p => p.Id, m =>
                     {

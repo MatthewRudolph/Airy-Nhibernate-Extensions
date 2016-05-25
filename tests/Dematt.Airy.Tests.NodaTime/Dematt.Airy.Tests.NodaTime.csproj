@@ -59,8 +59,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\TestEvent.cs" />
-    <Compile Include="NhibernateNodaTimePersistenceTests.cs" />
+    <Compile Include="DateTimeZoneTest.cs" />
+    <Compile Include="Entities\OffsetDateTimeTestEntity.cs" />
+    <Compile Include="OffsetDateTimeTests.cs" />
+    <Compile Include="PersistenceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionFactoryProvider.cs" />
   </ItemGroup>

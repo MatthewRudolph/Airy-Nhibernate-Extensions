@@ -4,7 +4,7 @@ using NodaTime;
 
 namespace Dematt.Airy.Tests.NodaTime.Entities
 {
-    public class TestEvent : EntityWithIntId
+    public class OffsetDateTimeTestEntity : EntityWithIntId
     {
         public virtual string Description { get; set; }
 
