@@ -78,6 +78,18 @@ namespace Dematt.Airy.Tests.NodaTime
                 var domainMapper = new ConventionModelMapper();
 
                 // Customise the mapping before adding the mappings to the configuration.
+                domainMapper.Class<DateTimeOffsetTestEntity>(c =>
+                {
+                    c.Id(p => p.Id, m =>
+                    {
+                        m.Generator(Generators.Native);
+                    });
+                    c.Property(p => p.Description, m =>
+                    {
+                        m.Length(100);
+                    });
+                });
+
                 domainMapper.Class<DateTimeZoneTestEntity>(c =>
                 {
                     c.Id(p => p.Id, m =>
@@ -93,6 +105,22 @@ namespace Dematt.Airy.Tests.NodaTime
                         m.Type<DateTimeZoneTzdbType>();
                     });
                     c.Property(p => p.FinishDateTimeZone, m =>
+                    {
+                        m.Type<DateTimeZoneTzdbType>();
+                    });
+                });
+
+                domainMapper.Class<LocationTestEntity>(c =>
+                {
+                    c.Id(p => p.Id, m =>
+                    {
+                        m.Generator(Generators.Native);
+                    });
+                    c.Property(p => p.Description, m =>
+                    {
+                        m.Length(100);
+                    });
+                    c.Property(p => p.LocationDateTimeZone, m =>
                     {
                         m.Type<DateTimeZoneTzdbType>();
                     });
