@@ -51,9 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LinqToHqlGeneratorsRegistry.cs" />
     <Compile Include="NodaTimeMapperHelper.cs" />
-    <Compile Include="OffsetDateTimeToInstantGenerator.cs" />
     <Compile Include="OffsetDateTimeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ZonedDateTimeType.cs" />

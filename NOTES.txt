@@ -1,0 +1,21 @@
+These are some of the references used to help write the NHibernate NodaTime UserTypes.
+The extending the NHibernate Linq provider are particularly useful as for now I have removed those 'features' from this implementation.
+
+Dapper implementation of NodaTime for reference.
+	https://github.com/mj1856/Dapper-NodaTime
+
+NHibernate implementation of NodaTime LocalDateTime by diegose (Diego Mijelshon)
+	https://github.com/diegose/NHibernate.Diegose/tree/master/NodaTime
+
+Questions and discussions about implementing NodaTime OffsetDateTime and LocalTime in NHibernate.
+	http://stackoverflow.com/questions/34452792/using-offsetdatetime-with-nhibernate
+	http://stackoverflow.com/questions/12964218/how-do-i-create-an-nhibnerate-iusertype-for-a-time-in-sql-server-2008-2012
+	https://gist.github.com/chilversc/d1ba1fdbae58d8a13704
+
+Articles on extending the NHibernate Linq provider to support otherwise unsupported operations.
+	http://www.primordialcode.com/blog/post/nhibernate-3-extending-linq-provider-fix-notsupportedexception
+	http://www.primordialcode.com/blog/post/nhibernate-customize-linq-provider-user-defined-sql-functions
+	http://fabiomaulo.blogspot.co.uk/2010/07/nhibernate-linq-provider-extension.html
+	http://weblogs.asp.net/ricardoperes/linq-to-nhibernate-extensions
+	http://stackoverflow.com/questions/21059722/nhibernate-linqtohqlgenerator-for-sql-server-2008-full-text-index-containing-k
+	http://stackoverflow.com/questions/6267912/extending-linq-to-nhibernate-provider-in-combination-with-dynamic-linq-problem
