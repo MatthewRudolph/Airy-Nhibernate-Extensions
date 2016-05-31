@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Dematt.Airy.Nhibernate.NodaTime;
 using Dematt.Airy.Tests.NodaTime.Entities;
 using NHibernate;
 using NHibernate.Linq;
@@ -8,6 +9,9 @@ using NUnit.Framework;
 
 namespace Dematt.Airy.Tests.NodaTime
 {
+    /// <summary>
+    /// Tests for persisting the NodaTime  <see cref="OffsetDateTime"/> type using the <see cref="OffsetDateTimeType"/> NHibernate custom user type.
+    /// </summary>
     public class OffsetDateTimeTests : PersistenceTest
     {
         /// <summary>

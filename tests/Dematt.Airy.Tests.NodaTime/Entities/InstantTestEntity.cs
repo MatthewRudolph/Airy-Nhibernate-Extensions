@@ -9,6 +9,6 @@ namespace Dematt.Airy.Tests.NodaTime.Entities
 
         public virtual Instant StartInstant { get; set; }
 
-        public virtual Instant FinishInstant { get; set; }
+        public virtual Instant? FinishInstant { get; set; }
     }
 }

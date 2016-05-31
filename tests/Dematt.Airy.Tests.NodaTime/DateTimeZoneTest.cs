@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Dematt.Airy.Nhibernate.NodaTime;
 using Dematt.Airy.Tests.NodaTime.Entities;
 using NHibernate;
 using NHibernate.Linq;
@@ -8,6 +9,9 @@ using NUnit.Framework;
 
 namespace Dematt.Airy.Tests.NodaTime
 {
+    /// <summary>
+    /// Tests for persisting the NodaTime  <see cref="DateTimeZone"/> type using the <see cref="DateTimeZoneTzdbType"/> NHibernate custom user type.
+    /// </summary>
     public class DateTimeZoneTest : PersistenceTest
     {
         /// <summary>
@@ -80,6 +84,9 @@ namespace Dematt.Airy.Tests.NodaTime
             Assert.That(retrievedEvent, Is.EqualTo(testEvent));
         }
 
+        /// <summary>
+        /// Can we query for an DateTimeZone in the database using LINQ == logic.
+        /// </summary>
         [Test]
         [SuppressMessage("ReSharper", "PossibleUnintendedReferenceComparison")]
         public void Can_Query_By_Equals_DateTimeZone_Stored_As_String()
@@ -127,12 +134,12 @@ namespace Dematt.Airy.Tests.NodaTime
         /// Can we write and read a OffsetDateTime stored as a DateTimeOffset.
         /// </summary>
         [Test]
-        public void Can_Write_And_Read_Null_DateTimeZone_Stored_As_String()
+        public void Can_Write_And_Read_A_Null_DateTimeZone_Stored_As_String()
         {
             var timeZone = DateTimeZoneProviders.Tzdb.GetZoneOrNull("Australia/West");
             var testEvent = new DateTimeZoneTestEntity
             {
-                Description = "Can_Write_And_Read_Null_DateTimeZone_Stored_As_String",
+                Description = "Can_Write_And_Read_A_Null_DateTimeZone_Stored_As_String",
                 StartDateTimeZone = timeZone,
                 FinishDateTimeZone = null
             };
