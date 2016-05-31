@@ -3,7 +3,7 @@ using System.Diagnostics;
 using NHibernate.Mapping.ByCode;
 using NodaTime;
 
-namespace Dematt.Airy.Nhibernate.NodaTime
+namespace Dematt.Airy.Nhibernate.NodaTime.Helpers
 {
     /// <summary>
     /// Provides helper methods for setting up NHibernate ModelMapper classes to map NodaTime types.
