@@ -110,6 +110,26 @@ namespace Dematt.Airy.Tests.NodaTime
                     });
                 });
 
+                domainMapper.Class<InstantTestEntity>(c =>
+                {
+                    c.Id(p => p.Id, m =>
+                    {
+                        m.Generator(Generators.Native);
+                    });
+                    c.Property(p => p.Description, m =>
+                    {
+                        m.Length(100);
+                    });
+                    c.Property(p => p.StartInstant, m =>
+                    {
+                        m.Type<InstantType>();
+                    });
+                    c.Property(p => p.FinishInstant, m =>
+                    {
+                        m.Type<InstantType>();
+                    });
+                });
+
                 domainMapper.Class<LocationTestEntity>(c =>
                 {
                     c.Id(p => p.Id, m =>
@@ -126,7 +146,6 @@ namespace Dematt.Airy.Tests.NodaTime
                     });
                 });
 
-                //domainMapper.BeforeMapProperty += NodaTimeMapperHelper.ApplyOffsetDateTimeType;
                 domainMapper.Class<OffsetDateTimeTestEntity>(c =>
                 {
                     c.Id(p => p.Id, m =>

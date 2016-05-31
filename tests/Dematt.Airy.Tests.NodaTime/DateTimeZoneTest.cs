@@ -42,6 +42,7 @@ namespace Dematt.Airy.Tests.NodaTime
                 };
                 session.Save(testEvent);
                 transaction.Commit();
+                Assert.That(testEvent.Id, Is.Not.Null);
             }
         }
 
@@ -74,6 +75,8 @@ namespace Dematt.Airy.Tests.NodaTime
                 transaction.Commit();
             }
 
+            Assert.That(retrievedEvent.StartDateTimeZone, Is.EqualTo(testEvent.StartDateTimeZone));
+            Assert.That(retrievedEvent.FinishDateTimeZone, Is.EqualTo(testEvent.FinishDateTimeZone));
             Assert.That(retrievedEvent, Is.EqualTo(testEvent));
         }
 

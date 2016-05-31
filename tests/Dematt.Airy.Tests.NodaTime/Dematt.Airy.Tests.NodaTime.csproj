@@ -61,7 +61,9 @@
   <ItemGroup>
     <Compile Include="DateTimeOffsetTests.cs" />
     <Compile Include="Entities\DateTimeOffsetTestEntity.cs" />
+    <Compile Include="Entities\InstantTestEntity.cs" />
     <Compile Include="Entities\LocationTestEntity.cs" />
+    <Compile Include="InstantTests.cs" />
     <Compile Include="OneTimeSetup.cs" />
     <Compile Include="DateTimeZoneTest.cs" />
     <Compile Include="Entities\OffsetDateTimeTestEntity.cs" />
