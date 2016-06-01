@@ -7,8 +7,23 @@ using NUnit.Framework;
 
 namespace Dematt.Airy.Tests.NodaTime
 {
+    /// <summary>
+    /// Tests for using a Bcl DateTimeOffset with a separate NodaTime DateTimeZone field 
+    /// to store the full date time with offset and time zone that an event happened.
+    /// </summary>
+    /// <remarks>
+    /// This is useful over storing when the event happened using a NodaTime ZonedDateTime as 
+    /// it allows use to more easily query for events using a *.Now time. We can get a UtcNow 
+    /// and get all events that it is between regardless of their time zone or offset.
+    /// 
+    /// This may be possible using ZonedDateTime but it would at the least require that it 
+    /// be stored in the database as a Int64 for the instant and string for the DateTimeZone Id and will require further investigation.
+    /// </remarks>
     public class DateTimeOffsetTests : PersistenceTest
     {
+        /// <summary>
+        /// Can we create a ZonedDateTime from a DateTimeOffset and a DateTimeZone.
+        /// </summary>
         [Test]
         public void Can_Create_ZonedDateTime_From_DateTimeOffset_And_DateTimeZone()
         {
@@ -19,6 +34,9 @@ namespace Dematt.Airy.Tests.NodaTime
             Assert.That(zonedDateTimeNow, Is.Not.Null);
         }
 
+        /// <summary>
+        /// Can we round-trip a DateTimeOffset with a DateTimeZone to a ZonedDateTime and get the same value back.
+        /// </summary>
         [Test]
         public void Can_RoundTrip_A_DateTimeOffset_To_ZonedDateTime_And_Back()
         {
@@ -30,6 +48,9 @@ namespace Dematt.Airy.Tests.NodaTime
             Assert.That(dateTimeOffsetNow, Is.EqualTo(dateTimeOffsetRoundTripped));
         }
 
+        /// <summary>
+        /// Can we round-trip a ZonedDateTime to a DateTimeOffset and DateTimeZone and get the ame value back.
+        /// </summary>
         [Test]
         public void Can_RoundTrip_A_ZonedDateTime_To_DateTimeOffset_And_Back()
         {
@@ -42,6 +63,10 @@ namespace Dematt.Airy.Tests.NodaTime
             Assert.That(zonedDateTimeNow, Is.EqualTo(zondedDateTimeRoundTripped));
         }
 
+        /// <summary>
+        /// Can we round-trip a ZonedDateTime to a DateTimeOffset and DateTimeZone
+        /// to a database using NHibernate and get the same value back.
+        /// </summary>
         [Test]
         public void Can_RoundTrip_A_ZonedDateTime_To_DateTimeOffset_Using_Persistence()
         {
