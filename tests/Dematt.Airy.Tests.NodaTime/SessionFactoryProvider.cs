@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Xml.Linq;
 using Dematt.Airy.Nhibernate.NodaTime;
 using Dematt.Airy.Tests.NodaTime.Entities;
 using NHibernate;
@@ -34,6 +35,18 @@ namespace Dematt.Airy.Tests.NodaTime
         /// </summary>        
         public SessionFactoryProvider(string nHhibernateConfigFile)
         {
+            Console.WriteLine(nHhibernateConfigFile);
+            // Loading from a file, you can also load from a stream
+            var xml = XDocument.Load(nHhibernateConfigFile);
+            var connectionQuery =
+                from c in xml.Root.Descendants()
+                where (string)c.Attribute("name") == "connection.connection_string"
+                select c.Value;
+            foreach (string s in connectionQuery)
+            {
+                Console.WriteLine(s);
+            }
+
             _configuration = new Configuration();
             _configuration.Configure(nHhibernateConfigFile);
             CreateNHibernateSessionFactory();
