@@ -35,16 +35,15 @@ namespace Dematt.Airy.Tests.NodaTime
         /// </summary>        
         public SessionFactoryProvider(string nHhibernateConfigFile)
         {
-            Console.WriteLine(nHhibernateConfigFile);
-            // Loading from a file, you can also load from a stream
+            Console.WriteLine("Using config file: " + nHhibernateConfigFile);
             var xml = XDocument.Load(nHhibernateConfigFile);
-            var connectionQuery =
-                from c in xml.Root.Descendants()
-                where (string)c.Attribute("name") == "connection.connection_string"
-                select c.Value;
-            foreach (string s in connectionQuery)
+            if (xml.Root != null)
             {
-                Console.WriteLine(s);
+                var connectionQuery =
+                    from c in xml.Root.Descendants()
+                    where (string)c.Attribute("name") == "connection.connection_string"
+                    select c.Value;
+                Console.WriteLine("Using connection string: " + connectionQuery.FirstOrDefault());
             }
 
             _configuration = new Configuration();
