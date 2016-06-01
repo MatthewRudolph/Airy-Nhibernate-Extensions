@@ -1,0 +1,86 @@
+# Notes:
+#   - Minimal appveyor.yml file is an empty file. All sections are optional.
+#   - Indent each level of configuration with 2 spaces. Do not use tabs!
+#   - All section names are case-sensitive.
+#   - Section names should be unique on each level.
+
+### CONFIGURATION FOR MASTER BRANCH (Live Releases) ###
+### This should be a Release build with symbols built for the nuget packages so they can be released to nuget.org ###
+-
+  branches:
+    only:
+      - master
+  
+  version: 1.0.0.{build}
+  services: mssql2014
+  configuration: Release
+  before_build:
+  - ps: >-
+      $versionToUse = $env:APPVEYOR_BUILD_VERSION
+
+      .\tools\SetVersion.ps1 $versionToUse
+      
+      nuget restore
+  build:
+    publish_nuget: true
+    publish_nuget_symbols: true
+    verbosity: minimal
+  before_test:
+  - ps: >-
+      .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaTime'
+
+      .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.xml'
+
+### CONFIGURATION FOR RELEASE BRANCHES (Pre-release builds and deployments) ###
+### This should be a Debug build but with symbols built for the nuget packages so they can be released as pre-release to nuget.org ###
+-
+  branches:
+    only:
+      - /release.*/
+      - v([0-9]+)\.([0-9]+)\.([0-9]+)
+  
+  version: 1.0.0.{build}
+  services: mssql2014
+  before_build:
+  - ps: >-
+      $versionToUse = $env:APPVEYOR_BUILD_VERSION
+
+      .\tools\SetVersion.ps1 $versionToUse Beta
+      
+      nuget restore
+  build:
+    publish_nuget: true
+    publish_nuget_symbols: true
+    verbosity: minimal
+  before_test:
+  - ps: >-
+      .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaTime'
+
+      .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.xml'
+
+### CONFIGURATION FOR ALL OTHER BRANCHES (i.e. dev, feature and hotfix) ###
+### This should be a Debug build for internal testing only.  Artifacts should not be released into the 'wild' ###
+-
+  branches:
+    except:
+      - master
+      - /release.*/
+      - v([0-9]+)\.([0-9]+)\.([0-9]+)
+  
+  version: 1.0.0.{build}
+  services: mssql2014
+  before_build:
+  - ps: >-
+      $versionToUse = $env:APPVEYOR_BUILD_VERSION
+
+      .\tools\SetVersion.ps1 $versionToUse Alpha
+      
+      nuget restore
+  build:
+    publish_nuget: true
+    verbosity: minimal
+  before_test:
+  - ps: >-
+      .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaTime'
+
+      .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.xml'

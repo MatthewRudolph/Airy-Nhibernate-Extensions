@@ -21,6 +21,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{D2E10BD0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CF259BF6-9878-45D2-BE3B-51F783BB3044}"
 	ProjectSection(SolutionItems) = preProject
+		AiryNugetIcon128x128.png = AiryNugetIcon128x128.png
+		AiryNugetIcon32x32.png = AiryNugetIcon32x32.png
+		AiryNugetIcon48x48.png = AiryNugetIcon48x48.png
+		appveyor.yml = appveyor.yml
 		LICENSE = LICENSE
 		NOTES.txt = NOTES.txt
 		README.md = README.md
