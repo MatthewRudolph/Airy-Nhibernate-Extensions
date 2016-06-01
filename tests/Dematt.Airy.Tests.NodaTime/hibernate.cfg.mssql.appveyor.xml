@@ -3,7 +3,7 @@
 <hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
   <session-factory>
     <property name="connection.connection_string">
-      Data Source=.\SQL2014; Initial Catalog=NhibernateNodaTime; Integrated Security=True; Persist Security Info=True;
+      Server=.\SQL2014; Database=NhibernateNodaTime; User ID=sa; Password=Password12!
     </property>
     <property name="dialect">
       NHibernate.Dialect.MsSql2012Dialect
