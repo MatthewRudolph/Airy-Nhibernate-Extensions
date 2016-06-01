@@ -3,13 +3,17 @@ using NUnit.Framework;
 
 namespace Dematt.Airy.Tests.NodaTime
 {
+    /// <summary>
+    /// Base abstract class for persistence tests.
+    /// Creates a NHibernate session factory that sessions can be obtained from.
+    /// </summary>
     public abstract class PersistenceTest
     {
         protected static SessionFactoryProvider SessionFactoryProvider;
         protected static ISessionFactory SessionFactory;
 
         /// <summary>
-        /// Creates an NHibernate Session factory and builds a fresh database schema.
+        /// Creates an NHibernate Session factory.
         /// </summary>
         [OneTimeSetUp]
         public void BeforeAllTests()
@@ -17,7 +21,6 @@ namespace Dematt.Airy.Tests.NodaTime
             string configFile = SessionFactoryProvider.GetFullPathForContentFile("hibernate.cfg.xml");
             SessionFactoryProvider = new SessionFactoryProvider(configFile);
             SessionFactory = SessionFactoryProvider.DefaultSessionFactory;
-            //SessionFactoryProvider.BuildSchema();
         }
 
         /// <summary>
