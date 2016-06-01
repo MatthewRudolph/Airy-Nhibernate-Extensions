@@ -7,7 +7,7 @@ using NodaTime;
 
 namespace Dematt.Airy.Nhibernate.NodaTime
 {
-    public class DateTimeZoneTzdbType : IUserType
+    public class DateTimeZoneTzdbType : ImmutableUserType, IUserType
     {
         public SqlType[] SqlTypes
         {
@@ -17,11 +17,6 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         public Type ReturnedType
         {
             get { return typeof(DateTimeZone); }
-        }
-
-        public bool IsMutable
-        {
-            get { return false; }
         }
 
         public new bool Equals(object x, object y)
@@ -54,26 +49,6 @@ namespace Dematt.Airy.Nhibernate.NodaTime
             {
                 NHibernateUtil.String.NullSafeSet(cmd, ((DateTimeZone)value).Id, index);
             }
-        }
-
-        public object DeepCopy(object value)
-        {
-            return value;
-        }
-
-        public object Replace(object original, object target, object owner)
-        {
-            return original;
-        }
-
-        public object Assemble(object cached, object owner)
-        {
-            return cached;
-        }
-
-        public object Disassemble(object value)
-        {
-            return value;
         }
     }
 }
