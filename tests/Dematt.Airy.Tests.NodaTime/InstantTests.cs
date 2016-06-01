@@ -147,5 +147,99 @@ namespace Dematt.Airy.Tests.NodaTime
                 Assert.That(testEvent, Is.EqualTo(retrievedEvent));
             }
         }
+
+        /// <summary>
+        /// Can we query for an Instant in the database using LINQ less then logic.
+        /// </summary>
+        [Test]
+        public void Can_Query_By_LessThan_Instant_Stored_As_Int64()
+        {
+
+            Instant startInstant = SystemClock.Instance.Now.Minus(Duration.FromHours(24));
+            Instant finishInstant = startInstant.Plus(Duration.FromHours(1));
+            var testEvent = new InstantTestEntity
+            {
+                Description = "Can_Query_By_LessThan_Instant_Stored_As_Int64",
+                StartInstant = startInstant,
+                FinishInstant = finishInstant
+            };
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                session.Save(testEvent);
+                transaction.Commit();
+            }
+
+            Instant beforeInstant = startInstant.Plus(Duration.FromSeconds(1));
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                var query = session.Query<InstantTestEntity>()
+                    .Where(x => x.Id == testEvent.Id && x.StartInstant < beforeInstant);
+                var retrievedEvent = query.SingleOrDefault();
+                transaction.Commit();
+                Assert.That(testEvent, Is.Not.Null);
+                Assert.That(testEvent, Is.EqualTo(retrievedEvent));
+            }
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                var query = session.Query<InstantTestEntity>()
+                    .Where(x => x.Id == testEvent.Id && x.StartInstant < beforeInstant && x.FinishInstant <= finishInstant);
+                var retrievedEvent = query.SingleOrDefault();
+                transaction.Commit();
+                Assert.That(testEvent, Is.Not.Null);
+                Assert.That(testEvent, Is.EqualTo(retrievedEvent));
+            }
+        }
+
+        /// <summary>
+        /// Can we query for an Instant in the database using LINQ more then logic.
+        /// </summary>
+        [Test]
+        public void Can_Query_By_MoreThan_Instant_Stored_As_Int64()
+        {
+
+            Instant startInstant = SystemClock.Instance.Now.Plus(Duration.FromHours(24));
+            Instant finishInstant = startInstant.Plus(Duration.FromHours(1));
+            var testEvent = new InstantTestEntity
+            {
+                Description = " Can_Query_By_MoreThan_Instant_Stored_As_Int64",
+                StartInstant = startInstant,
+                FinishInstant = finishInstant
+            };
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                session.Save(testEvent);
+                transaction.Commit();
+            }
+
+            Instant beforeInstant = startInstant.Minus(Duration.FromSeconds(1));
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                var query = session.Query<InstantTestEntity>()
+                    .Where(x => x.Id == testEvent.Id && x.StartInstant > beforeInstant);
+                var retrievedEvent = query.SingleOrDefault();
+                transaction.Commit();
+                Assert.That(testEvent, Is.Not.Null);
+                Assert.That(testEvent, Is.EqualTo(retrievedEvent));
+            }
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                var query = session.Query<InstantTestEntity>()
+                    .Where(x => x.Id == testEvent.Id && x.StartInstant > beforeInstant && x.FinishInstant >= finishInstant);
+                var retrievedEvent = query.SingleOrDefault();
+                transaction.Commit();
+                Assert.That(testEvent, Is.Not.Null);
+                Assert.That(testEvent, Is.EqualTo(retrievedEvent));
+            }
+        }
     }
 }
