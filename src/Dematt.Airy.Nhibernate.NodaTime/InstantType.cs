@@ -7,7 +7,7 @@ using NodaTime;
 
 namespace Dematt.Airy.Nhibernate.NodaTime
 {
-    public class InstantType : IUserType
+    public class InstantType : ImmutableUserType, IUserType
     {
         public SqlType[] SqlTypes
         {
@@ -18,12 +18,7 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         {
             get { return typeof(Instant); }
         }
-
-        public bool IsMutable
-        {
-            get { return false; }
-        }
-
+        
         public new bool Equals(object x, object y)
         {
             return object.Equals(x, y);
@@ -54,26 +49,6 @@ namespace Dematt.Airy.Nhibernate.NodaTime
             {
                 NHibernateUtil.Int64.NullSafeSet(cmd, ((Instant)value).Ticks, index);
             }
-        }
-
-        public object DeepCopy(object value)
-        {
-            return value;
-        }
-
-        public object Replace(object original, object target, object owner)
-        {
-            return original;
-        }
-
-        public object Assemble(object cached, object owner)
-        {
-            return cached;
-        }
-
-        public object Disassemble(object value)
-        {
-            return value;
         }
     }
 }

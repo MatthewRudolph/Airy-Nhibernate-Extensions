@@ -7,7 +7,7 @@ using NodaTime;
 
 namespace Dematt.Airy.Nhibernate.NodaTime
 {
-    public class OffsetDateTimeType : IUserType
+    public class OffsetDateTimeType : ImmutableUserType, IUserType
     {
         public SqlType[] SqlTypes
         {
@@ -17,11 +17,6 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         public Type ReturnedType
         {
             get { return typeof(OffsetDateTime); }
-        }
-
-        public bool IsMutable
-        {
-            get { return false; }
         }
 
         public new bool Equals(object x, object y)
@@ -56,26 +51,6 @@ namespace Dematt.Airy.Nhibernate.NodaTime
             {
                 NHibernateUtil.DateTimeOffset.NullSafeSet(cmd, ((OffsetDateTime)value).ToDateTimeOffset(), index);
             }
-        }
-
-        public object DeepCopy(object value)
-        {
-            return value;
-        }
-
-        public object Replace(object original, object target, object owner)
-        {
-            return original;
-        }
-
-        public object Assemble(object cached, object owner)
-        {
-            return cached;
-        }
-
-        public object Disassemble(object value)
-        {
-            return value;
         }
     }
 }
