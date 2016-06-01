@@ -20,6 +20,8 @@
 
       .\tools\SetVersion.ps1 $versionToUse
       
+      .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.xml'
+
       nuget restore
   build:
     publish_nuget: true
@@ -28,8 +30,6 @@
   before_test:
   - ps: >-
       .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaTime'
-
-      .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.xml'
 
 ### CONFIGURATION FOR RELEASE BRANCHES (Pre-release builds and deployments) ###
 ### This should be a Debug build but with symbols built for the nuget packages so they can be released as pre-release to nuget.org ###
@@ -47,6 +47,8 @@
 
       .\tools\SetVersion.ps1 $versionToUse Beta
       
+      .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.xml'
+
       nuget restore
   build:
     publish_nuget: true
@@ -55,8 +57,6 @@
   before_test:
   - ps: >-
       .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaTime'
-
-      .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.xml'
 
 ### CONFIGURATION FOR ALL OTHER BRANCHES (i.e. dev, feature and hotfix) ###
 ### This should be a Debug build for internal testing only.  Artifacts should not be released into the 'wild' ###
@@ -74,6 +74,8 @@
       $versionToUse = $env:APPVEYOR_BUILD_VERSION
 
       .\tools\SetVersion.ps1 $versionToUse Alpha
+
+      .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.xml'
       
       nuget restore
   build:
@@ -82,5 +84,3 @@
   before_test:
   - ps: >-
       .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaTime'
-
-      .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.xml'
