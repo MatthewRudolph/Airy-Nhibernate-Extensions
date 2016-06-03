@@ -73,6 +73,7 @@
     <Compile Include="PersistenceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionFactoryProvider.cs" />
+    <Compile Include="ZonedDateTimeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
