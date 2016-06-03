@@ -31,7 +31,9 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         /// </summary>        
         /// <param name="value">The object to create a deep copy of.</param>
         /// <returns>A new object with the same values as the original object.</returns>     
-        /// <remarks>For immutable objects we can just return the original value.</remarks>
+        /// <remarks>
+        /// For immutable objects we can just return the original value.
+        /// </remarks>
         public object DeepCopy(object value)
         {
             // As our object is immutable just return the value.
@@ -43,9 +45,9 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         /// we are merging to with a new (<paramref name="original"/>) value from the detached
         /// entity we are merging. 
         /// </summary>
-        /// <param name="original">the value from the detached entity being merged.</param>
-        /// <param name="target">the value in the managed entity.</param>
-        /// <param name="owner">the managed entity.</param>
+        /// <param name="original">The value from the detached entity being merged.</param>
+        /// <param name="target">The value in the managed entity.</param>
+        /// <param name="owner">The managed entity.</param>
         /// <returns>The value to be merged.</returns>
         /// <remarks>
         /// For immutable objects, or null values, it is safe to simply return the first parameter.
