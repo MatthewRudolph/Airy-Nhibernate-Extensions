@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using Dematt.Airy.Nhibernate.NodaTime;
+using Dematt.Airy.Nhibernate.NodaTime.Helpers;
 using Dematt.Airy.Tests.NodaTime.Entities;
 using NHibernate;
 using NHibernate.Cfg;
@@ -203,7 +204,7 @@ namespace Dematt.Airy.Tests.NodaTime
                 // Build and the mappings for the test domain entities.
                 _configuration.AddMapping(domainMapper.CompileMappingFor(domainTypes));
 
-                //_configuration.LinqToHqlGeneratorsRegistry<LinqToHqlGeneratorsRegistry>();
+                _configuration.LinqToHqlGeneratorsRegistry<LinqToHqlGeneratorsRegistry>();
 
                 _configuration.DataBaseIntegration(x =>
                 {

@@ -232,6 +232,7 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         /// Transform the object into its cacheable representation.         
         /// </summary>
         /// <param name="value">The object to be cached.</param>
+        /// <param name="session">The session.</param>
         /// <returns>A cacheable representation of the object.</returns>
         /// <remarks>
         /// At the very least this method should perform a deep copy if the type is mutable.

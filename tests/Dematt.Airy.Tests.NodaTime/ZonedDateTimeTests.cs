@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using Dematt.Airy.Nhibernate.NodaTime;
+using Dematt.Airy.Nhibernate.NodaTime.Helpers;
 using Dematt.Airy.Tests.NodaTime.Entities;
 using NHibernate;
 using NHibernate.Linq;
-using NHibernate.Util;
 using NodaTime;
 using NUnit.Framework;
 
@@ -145,6 +145,114 @@ namespace Dematt.Airy.Tests.NodaTime
             using (ITransaction transaction = session.BeginTransaction())
             {
                 var query = session.Query<ZonedDateTimeTestEntity>().Where(x => x.FinishZonedDateTime == searchTime);
+                var retrievedEvent = query.SingleOrDefault();
+                transaction.Commit();
+                Assert.That(testEvent, Is.Not.Null);
+                Assert.That(testEvent, Is.EqualTo(retrievedEvent));
+            }
+        }
+
+        /// <summary>
+        /// Can we query for a ZonedDateTime in the database based just on the DateTimeOffset using LINQ less then logic.
+        /// </summary>
+        /// <remarks>
+        /// This requires that the <see cref="ZonedDateTimeGtLtGenerator"/> has been registered in the SessionFactory configuration.
+        /// </remarks>
+        [Test]
+        public void Can_Query_By_LessThan_ZonedDateTime_Stored_As_DateTimeOffset()
+        {
+            var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
+            Instant startInstant = SystemClock.Instance.Now.Minus(Duration.FromHours(24));
+            ZonedDateTime startZonedDateTime = startInstant.InZone(timeZone);
+            ZonedDateTime finishZonedDateTime = startZonedDateTime.Plus(Duration.FromHours(1));
+
+            var testEvent = new ZonedDateTimeTestEntity
+            {
+                Description = "Can_Query_By_LessThan_ZonedDateTime_Stored_As_DateTimeOffset",
+                StartZonedDateTime = startZonedDateTime,
+                FinishZonedDateTime = finishZonedDateTime
+            };
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                session.Save(testEvent);
+                transaction.Commit();
+            }
+
+            ZonedDateTime beforeStart = startZonedDateTime.Plus(Duration.FromMinutes(1));
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                var query = session.Query<ZonedDateTimeTestEntity>()
+                    .Where(x => x.Id == testEvent.Id && x.StartZonedDateTime.ToDateTimeOffset() < beforeStart.ToDateTimeOffset());
+                var retrievedEvent = query.SingleOrDefault();
+                transaction.Commit();
+                Assert.That(testEvent, Is.Not.Null);
+                Assert.That(testEvent, Is.EqualTo(retrievedEvent));
+            }
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                var query = session.Query<ZonedDateTimeTestEntity>()
+                    .Where(x => x.Id == testEvent.Id
+                        && x.StartZonedDateTime.ToDateTimeOffset() < beforeStart.ToDateTimeOffset()
+                        && x.FinishZonedDateTime.Value.ToDateTimeOffset() <= finishZonedDateTime.ToDateTimeOffset());
+                var retrievedEvent = query.SingleOrDefault();
+                transaction.Commit();
+                Assert.That(testEvent, Is.Not.Null);
+                Assert.That(testEvent, Is.EqualTo(retrievedEvent));
+            }
+        }
+
+        /// <summary>
+        /// Can we query for a ZonedDateTime in the database based just on the DateTimeOffset using LINQ more then logic.
+        /// </summary>
+        /// <remarks>
+        /// This requires that the <see cref="ZonedDateTimeGtLtGenerator"/> has been registered in the SessionFactory configuration.
+        /// </remarks>
+        [Test]
+        public void Can_Query_By_MoreThan_ZonedDateTime_Stored_As_DateTimeOffset()
+        {
+            var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
+            Instant startInstant = SystemClock.Instance.Now.Plus(Duration.FromHours(24));
+            ZonedDateTime startZonedDateTime = startInstant.InZone(timeZone);
+            ZonedDateTime finishZonedDateTime = startZonedDateTime.Plus(Duration.FromHours(1));
+
+            var testEvent = new ZonedDateTimeTestEntity
+            {
+                Description = "Can_Query_By_LessThan_ZonedDateTime_Stored_As_DateTimeOffset",
+                StartZonedDateTime = startZonedDateTime,
+                FinishZonedDateTime = finishZonedDateTime
+            };
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                session.Save(testEvent);
+                transaction.Commit();
+            }
+
+            ZonedDateTime beforeStart = startZonedDateTime.Minus(Duration.FromMinutes(1));
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                var query = session.Query<ZonedDateTimeTestEntity>()
+                    .Where(x => x.Id == testEvent.Id && x.StartZonedDateTime.ToDateTimeOffset() > beforeStart.ToDateTimeOffset());
+                var retrievedEvent = query.SingleOrDefault();
+                transaction.Commit();
+                Assert.That(testEvent, Is.Not.Null);
+                Assert.That(testEvent, Is.EqualTo(retrievedEvent));
+            }
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                var query = session.Query<ZonedDateTimeTestEntity>()
+                    .Where(x => x.Id == testEvent.Id
+                        && x.StartZonedDateTime.ToDateTimeOffset() > beforeStart.ToDateTimeOffset()
+                        && x.FinishZonedDateTime.Value.ToDateTimeOffset() >= finishZonedDateTime.ToDateTimeOffset());
                 var retrievedEvent = query.SingleOrDefault();
                 transaction.Commit();
                 Assert.That(testEvent, Is.Not.Null);
