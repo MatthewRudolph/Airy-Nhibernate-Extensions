@@ -55,6 +55,7 @@
     <Compile Include="Helpers\LinqToHqlGeneratorsRegistry.cs" />
     <Compile Include="Helpers\NodaTimeMapperHelper.cs" />
     <Compile Include="Helpers\ZonedDateTimeGtLtGenerator.cs" />
+    <Compile Include="ImmutableCompositeUserType.cs" />
     <Compile Include="ImmutableUserType.cs" />
     <Compile Include="InstantType.cs" />
     <Compile Include="OffsetDateTimeType.cs" />
