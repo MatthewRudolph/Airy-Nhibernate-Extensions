@@ -14,16 +14,12 @@ Allows the use of the NodaTime structs in Domain or POCO objects when using NHib
     * Microsoft SQL Server 2014
 
 ### Supported NodaTime Types: ###
-
     #### DateTimeZone ####
-      Implemented by DateTimeZoneTzdbType stored as a nvarchar(35)
-    
+      Implemented by DateTimeZoneTzdbType stored as a nvarchar(35)    
     #### Instant ####
       Implemented by InstantType stored as a bigint
-    
     #### OffsetDateTime ####
-        Implemented by OffsetDateTimeType stored as a datetimeoffset(7)
-    
+        Implemented by OffsetDateTimeType stored as a datetimeoffset(7)    
     #### ZonedDateTime ####
         + Implemented by ZonedDateTimeBclType stored as:
             + Column1: datetimeoffset(7) (Stores the DateTime and Offset)
