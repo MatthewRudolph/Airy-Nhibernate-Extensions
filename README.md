@@ -82,7 +82,8 @@ modelMapper.Class<ZonedDateTimeTestEntity>(c =>
 });
 
 var _configuration = new Configuration();
-_configuration.AddMapping(domainMapper.CompileMappingFor(domainTypes));
+_configuration.AddMapping(modelMapper.CompileMappingFor(domainTypes));
+
 /// Optional add the linq extension to allow quering by ZonedDateTime.ToDateTimeOffset()
 _configuration.LinqToHqlGeneratorsRegistry<LinqToHqlGeneratorsRegistry>();
 
