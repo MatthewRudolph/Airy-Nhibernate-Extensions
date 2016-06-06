@@ -191,12 +191,12 @@ namespace Dematt.Airy.Tests.NodaTime
                     });
                     c.Property(p => p.StartZonedDateTime, m =>
                     {
-                        m.Type<ZonedDateTimeType>();
+                        m.Type<ZonedDateTimeTzdbType>();
                         m.Columns(f => f.Name("StartZonedDateTime"), f => f.Name("StartZoneDateTimeTimeZoneId"));
                     });
                     c.Property(p => p.FinishZonedDateTime, m =>
                     {
-                        m.Type<ZonedDateTimeType>();
+                        m.Type<ZonedDateTimeTzdbType>();
                         m.Columns(f => f.Name("FinishZonedDateTime"), f => f.Name("FinishZoneDateTimeTimeZoneId"));
                     });
                 });

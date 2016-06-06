@@ -10,12 +10,14 @@ using NodaTime;
 namespace Dematt.Airy.Nhibernate.NodaTime
 {
     /// <summary>
-    /// 
+    /// Abstract class the implements all of the methods required to store a <see cref="ZonedDateTime"/> except,
+    /// the NullSafeGet method which is implemented in two derived class one for Tzdb data sources and the other for
     /// </summary>
     /// <remarks>
-    /// <see cref="IParameterizedType"/>
+    /// This could have also be implemented using the <see cref="IParameterizedType"/> interface.
+    /// However it is currently preferred to have this base class and then two implantations of it.
     /// </remarks>
-    public class ZonedDateTimeType : ImmutableCompositeUserType, ICompositeUserType
+    public abstract class ZonedDateTimeType : ImmutableCompositeUserType
     {
         /// <summary>
         /// Gets the "property names" that may be used in a query.
@@ -86,19 +88,16 @@ namespace Dematt.Airy.Nhibernate.NodaTime
             throw new InvalidOperationException("ZonedDateTime is an immutable object. SetPropertyValue isn't supported.");
         }
 
-        public object NullSafeGet(IDataReader dr, string[] names, ISessionImplementor session, object owner)
-        {
-            var dateTimeOffset = (DateTimeOffset?)NHibernateUtil.DateTimeOffset.NullSafeGet(dr, names[0], session, owner);
-            var timeZone = (string)NHibernateUtil.String.NullSafeGet(dr, names[1], session, owner);
-
-            if (dateTimeOffset == null || timeZone == null)
-            {
-                return null;
-            }
-
-            return dateTimeOffset.ToZonedDateTime(DateTimeZoneProviders.Tzdb.GetZoneOrNull(timeZone));
-        }
-
+        /// <summary>
+        /// Write an instance of the mapped class to a prepared statement. We should handle possibility of null values.
+        /// A multi-column type should be written to parameters starting from index.
+        /// If a property is not settable, skip it and don't increment the index.
+        /// </summary>
+        /// <param name="cmd">The command used for writing the value.</param>
+        /// <param name="value">The value to write.</param>
+        /// <param name="index">The parameters index to start at.</param>
+        /// <param name="settable">Array indicating which properties are settable</param>
+        /// <param name="session">The session.</param>
         public void NullSafeSet(IDbCommand cmd, object value, int index, bool[] settable, ISessionImplementor session)
         {
             if (value == null)
