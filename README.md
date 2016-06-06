@@ -15,15 +15,15 @@ Allows the use of the NodaTime structs in Domain or POCO objects when using NHib
 
 ### Supported NodaTime Types ###
   + **DateTimeZone**  
-    Implemented by DateTimeZoneTzdbType stored as a nvarchar(35)
+    + Implemented by DateTimeZoneTzdbType stored as a nvarchar(35)
   + **Instant**  
-    Implemented by InstantType stored as a bigint
+    + Implemented by InstantType stored as a bigint
   + **OffsetDateTime**  
-    Implemented by OffsetDateTimeType stored as a datetimeoffset(7)
+    + Implemented by OffsetDateTimeType stored as a datetimeoffset(7)
   + **ZonedDateTime**  
-  Implemented by ZonedDateTimeBclType stored as  
-    Column1: datetimeoffset(7) (Stores the DateTime and Offset)  
-    Column2: nvarchar(35) (Stores the Bcl DateTimeZone Id)  
-  Implemented by ZonedDateTimeTzdbType stored as  
-    Column1: datetimeoffset(7) (Stores the DateTime and Offset)  
-    Column2: nvarchar(35) (Stores the Tzdb DateTimeZone Id)  
+    + Implemented by ZonedDateTimeBclType stored as  
+      + Column1: datetimeoffset(7) (Stores the DateTime and Offset)  
+      + Column2: nvarchar(35) (Stores the Bcl DateTimeZone Id)  
+    + Implemented by ZonedDateTimeTzdbType stored as  
+      + Column1: datetimeoffset(7) (Stores the DateTime and Offset)  
+      + Column2: nvarchar(35) (Stores the Tzdb DateTimeZone Id)  
