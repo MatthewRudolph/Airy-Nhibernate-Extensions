@@ -50,6 +50,9 @@ public class ZonedDateTimeTestEntity
 ```
 The mapping code would look like this.
 ```
+var myEntities = new [] {
+    typeof(ZonedDateTimeTestEntity)
+};
 var modelMapper = new ModelMapper();
 modelMapper.Class<ZonedDateTimeTestEntity>(c =>
 {
@@ -82,7 +85,7 @@ modelMapper.Class<ZonedDateTimeTestEntity>(c =>
 });
 
 var _configuration = new Configuration();
-_configuration.AddMapping(modelMapper.CompileMappingFor(domainTypes));
+_configuration.AddMapping(modelMapper.CompileMappingFor(myEntities));
 
 /// Optional add the linq extension to allow quering by ZonedDateTime.ToDateTimeOffset()
 _configuration.LinqToHqlGeneratorsRegistry<LinqToHqlGeneratorsRegistry>();
@@ -92,3 +95,20 @@ var session = factory.OpenSession();
 ```
 
 For other examples please see the tests.
+
+## Acknowledgements ##
+Jon Skeet and the other people that work on the NodaTime project.
+  + http://nodatime.org/
+  + https://github.com/nodatime/nodatime
+
+This stackoverflow post that got me started on this project when I was looking at the best way to store NodaTime structs.
+  + http://stackoverflow.com/questions/34452792/using-offsetdatetime-with-nhibernate
+  + https://gist.github.com/chilversc/d1ba1fdbae58d8a13704
+
+##Caveats##
+As noted by the NodaTime project, dates and times are a complicated and extremely difficult area in which to handle all cases correctly.
+Every project will have its own unique requirements and rules as to how to handle them, this is not intended to be a global solution to storing NodaTime structs.
+It is inevitably driven be the requirements of the projects I am currently working on.  For example we store the Instant part of a ZonedDateTime as a datetimeoffset and not as a bigint (Int64) because of external reporting requirements of the database where the data is stored.
+Having said all of that if it is missing something you require or you have an issue please do not hesitate to raise a github issue or pull request.
+
+
