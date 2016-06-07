@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using Dematt.Airy.Nhibernate.NodaTime.Extensions;
 using NHibernate;
 using NHibernate.Engine;
 using NHibernate.Type;

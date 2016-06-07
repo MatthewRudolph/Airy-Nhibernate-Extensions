@@ -70,7 +70,7 @@ namespace Dematt.Airy.Tests.NodaTime
         }
 
         /// <summary>
-        /// Can we write and read an null Instant stored as a Int64.
+        /// Can we write and read a null Instant stored as a Int64.
         /// </summary>
         [Test]
         public void Can_Write_And_Read_A_Null_Instant_Stored_As_Int64()
@@ -109,7 +109,6 @@ namespace Dematt.Airy.Tests.NodaTime
         [Test]
         public void Can_Query_By_Equals_Instant_Stored_As_Int64()
         {
-
             Instant startInstant = SystemClock.Instance.Now;
             Instant finishInstant = startInstant.Plus(Duration.FromHours(1));
             var testEvent = new InstantTestEntity
@@ -154,7 +153,6 @@ namespace Dematt.Airy.Tests.NodaTime
         [Test]
         public void Can_Query_By_LessThan_Instant_Stored_As_Int64()
         {
-
             Instant startInstant = SystemClock.Instance.Now.Minus(Duration.FromHours(24));
             Instant finishInstant = startInstant.Plus(Duration.FromHours(1));
             var testEvent = new InstantTestEntity
@@ -201,7 +199,6 @@ namespace Dematt.Airy.Tests.NodaTime
         [Test]
         public void Can_Query_By_MoreThan_Instant_Stored_As_Int64()
         {
-
             Instant startInstant = SystemClock.Instance.Now.Plus(Duration.FromHours(24));
             Instant finishInstant = startInstant.Plus(Duration.FromHours(1));
             var testEvent = new InstantTestEntity
