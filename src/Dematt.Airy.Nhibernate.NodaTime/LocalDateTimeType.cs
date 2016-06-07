@@ -8,13 +8,13 @@ using NodaTime;
 namespace Dematt.Airy.Nhibernate.NodaTime
 {
     /// <summary>
-    /// An NHibernate Custom User Type for the NodaTime <see cref="LocalDate"/> struct.    
+    /// An NHibernate Custom User Type for the NodaTime <see cref="LocalDateTime"/> struct.
     /// </summary>
     /// <remarks>
-    /// This allows the NodaTime LocalDate struct to be used as properties in the domain and mapped using Nhibernate.
+    /// This allows the NodaTime LocalDateTime struct to be used as properties in the domain and mapped using Nhibernate.
     /// It will be store it in the database in a single field with a data type of date.
     /// </remarks>
-    public class LocalDateType : ImmutableUserType, IUserType
+    public class LocalDateTimeType : ImmutableUserType, IUserType
     {
         /// <summary>
         /// The SqlType used to store the data in the database.
@@ -29,7 +29,7 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         {
             get
             {
-                return new[] { SqlTypeFactory.Date };
+                return new[] { SqlTypeFactory.DateTime2 };
             }
         }
 
@@ -38,7 +38,7 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         /// </summary>
         public Type ReturnedType
         {
-            get { return typeof(LocalDate); }
+            get { return typeof(LocalDateTime); }
         }
 
         /// <summary>
@@ -50,13 +50,12 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         /// <param name="owner">The containing entity.</param>        
         public object NullSafeGet(IDataReader rs, string[] names, object owner)
         {
-            var value = NHibernateUtil.Date.NullSafeGet(rs, names);
+            var value = NHibernateUtil.DateTime2.NullSafeGet(rs, names);
             if (value == null)
             {
                 return null;
             }
-            var dateTime = (DateTime)value;
-            return new LocalDate(dateTime.Year, dateTime.Month, dateTime.Day);
+            return LocalDateTime.FromDateTime((DateTime)value);
         }
 
         /// <summary>
@@ -69,6 +68,9 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         /// <param name="index">The parameters index to start at.</param>
         public void NullSafeSet(IDbCommand cmd, object value, int index)
         {
+            // We have to cast to SqlParameter instead of IDataParameter because...
+            // The MS data provider takes the DbType of DbType.Time to be DateTime not TimeSpan.
+            // Therefore we cast to SqlParamater here and below set the SqlDbType (instead of the DbType) to be SqlDbType.Time
             var parm = (IDataParameter)cmd.Parameters[index];
 
             if (value == null)
@@ -77,9 +79,8 @@ namespace Dematt.Airy.Nhibernate.NodaTime
             }
             else
             {
-                var localDate = (LocalDate)value;
-                parm.DbType = DbType.Date;
-                parm.Value = new DateTime(localDate.Year, localDate.Month, localDate.Day);
+                parm.DbType = DbType.DateTime2;
+                parm.Value = ((LocalDateTime)value).ToDateTimeUnspecified();
             }
         }
 

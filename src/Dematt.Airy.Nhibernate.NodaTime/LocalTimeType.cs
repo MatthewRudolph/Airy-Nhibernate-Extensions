@@ -56,7 +56,7 @@ namespace Dematt.Airy.Nhibernate.NodaTime
             {
                 return null;
             }
-            return LocalTime.Midnight + Period.FromTicks(((TimeSpan)value).Ticks);
+            return LocalTime.FromTicksSinceMidnight(((TimeSpan)value).Ticks);
         }
 
         /// <summary>
