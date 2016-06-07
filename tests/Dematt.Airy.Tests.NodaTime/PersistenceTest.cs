@@ -1,4 +1,5 @@
 ﻿using NHibernate;
+using NodaTime;
 using NUnit.Framework;
 
 namespace Dematt.Airy.Tests.NodaTime
@@ -11,6 +12,12 @@ namespace Dematt.Airy.Tests.NodaTime
     {
         protected static SessionFactoryProvider SessionFactoryProvider;
         protected static ISessionFactory SessionFactory;
+        protected readonly IClock TestClock;
+
+        protected PersistenceTest()
+        {
+            TestClock = SystemClock.Instance;
+        }
 
         /// <summary>
         /// Creates an NHibernate Session factory.

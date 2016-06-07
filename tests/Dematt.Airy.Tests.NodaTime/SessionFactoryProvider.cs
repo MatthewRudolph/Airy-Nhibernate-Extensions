@@ -143,6 +143,26 @@ namespace Dematt.Airy.Tests.NodaTime
                     });
                 });
 
+                domainMapper.Class<LocalDateTestEntity>(c =>
+                {
+                    c.Id(p => p.Id, m =>
+                    {
+                        m.Generator(Generators.Native);
+                    });
+                    c.Property(p => p.Description, m =>
+                    {
+                        m.Length(100);
+                    });
+                    c.Property(p => p.StartLocalDate, m =>
+                    {
+                        m.Type<LocalDateType>();
+                    });
+                    c.Property(p => p.FinishLocalDate, m =>
+                    {
+                        m.Type<LocalDateType>();
+                    });
+                });
+
                 domainMapper.Class<LocationTestEntity>(c =>
                 {
                     c.Id(p => p.Id, m =>

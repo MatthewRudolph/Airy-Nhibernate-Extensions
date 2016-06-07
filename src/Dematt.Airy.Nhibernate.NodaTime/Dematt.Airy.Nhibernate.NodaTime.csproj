@@ -58,6 +58,7 @@
     <Compile Include="ImmutableCompositeUserType.cs" />
     <Compile Include="ImmutableUserType.cs" />
     <Compile Include="InstantType.cs" />
+    <Compile Include="LocalDateType.cs" />
     <Compile Include="OffsetDateTimeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DateTimeZoneTzdbType.cs" />
