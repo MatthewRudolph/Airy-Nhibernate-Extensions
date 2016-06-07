@@ -61,11 +61,13 @@
   <ItemGroup>
     <Compile Include="DateTimeOffsetTests.cs" />
     <Compile Include="Entities\DateTimeOffsetTestEntity.cs" />
+    <Compile Include="Entities\LocalTimeTestEntity.cs" />
     <Compile Include="Entities\LocalDateTestEntity.cs" />
     <Compile Include="Entities\ZonedDateTimeTestEntity.cs" />
     <Compile Include="Entities\InstantTestEntity.cs" />
     <Compile Include="Entities\LocationTestEntity.cs" />
     <Compile Include="InstantTests.cs" />
+    <Compile Include="LocalTimeTests.cs" />
     <Compile Include="LocalDateTests.cs" />
     <Compile Include="OneTimeSetup.cs" />
     <Compile Include="DateTimeZoneTest.cs" />
