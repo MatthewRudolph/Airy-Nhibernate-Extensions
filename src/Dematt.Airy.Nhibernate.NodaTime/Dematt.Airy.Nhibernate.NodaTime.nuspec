@@ -1,0 +1,28 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/MatthewRudolph/Airy-Nhibernate-Extensions/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/MatthewRudolph/Airy-Nhibernate-Extensions</projectUrl>
+    <iconUrl>https://raw.github.com/MatthewRudolph/Airy-Nhibernate-Extensions/master/AiryNugetIcon128x128.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Release Summary: https://github.com/MatthewRudolph/Airy-Nhibernate-Extensions/blob/master/ReleaseNotes.txt </releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>NodaTime NHibernate Airy</tags>
+    <dependencies>   
+      
+      <!-- We have only tested with NodaTime 1.3.2, and pretty sure that we would be incompatible with the 2.0 when it is released,
+           but we should be ok for any future 1.x.x releases. -->
+      <dependency id="NodaTime" version="[1.3.2,2)" />
+      
+      <!-- For Nhibernate we are OK with anything greater than the current 4.0 release, but for safety not any future 5.0 releases. -->
+      <dependency id="NHibernate" version="[4.0.4.4000,5)" />
+    
+    </dependencies>
+  </metadata>
+</package>
