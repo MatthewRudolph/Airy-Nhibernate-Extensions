@@ -1,0 +1,15 @@
+Release v1.0.0
+=============================
+
+## Features ##
+    **Dematt.Airy.Nhibernate.NodaTime**
+        * Custom NHibernate UserType and Composite User Types for the following NodaTime structs.
+          + DateTimeZone
+          + Instant
+          + LocalDate
+          + LocalDateTime
+          + LocalTime
+          + OffsetDateTime
+          + ZonedDateTime
+        * For details of use please see the ReadMe.md file.
+  
