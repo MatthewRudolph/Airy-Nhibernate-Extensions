@@ -4,8 +4,8 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/x9ed1fnac4pllcd7/branch/dev?svg=true&passingText=dev%20-%20passing&failingText=dev%20-%20failing&pendingText=dev%20-%20pending)](https://ci.appveyor.com/project/MatthewRudolph/airy-nhibernate-extensions/branch/dev)
 
 ## About ##
-Provides Noda Time support for NHibernate.
-NHibenrate Custom UserType and Custom CompositeUserType implementations of the NodaTime structs.
+Provides Noda Time support for NHibernate.  
+NHibenrate Custom UserType and Custom CompositeUserType implementations of the NodaTime structs.  
 Allows the use of the NodaTime structs in Domain or POCO objects when using NHiberate for data access (ORM).
 
 ## Features ##
