@@ -41,12 +41,12 @@ Allows the use of the NodaTime structs in Domain or POCO objects when using NHib
 ### NHibernate ###
 
 Install using nuget.
-```
+```Powershell
 Install-Package Dematt.Airy.Nhibernate.NodaTime
 ```
 
 Given the following class to map.
-```
+```C#
 public class ZonedDateTimeTestEntity
 {
     public virtual int Id { get; set; }
@@ -64,7 +64,7 @@ public class ZonedDateTimeTestEntity
 ```
 
 The mapping code would look like this.
-```
+```C#
 var myEntities = new [] {
     typeof(ZonedDateTimeTestEntity)
 };
