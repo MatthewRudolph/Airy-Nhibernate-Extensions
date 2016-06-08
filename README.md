@@ -6,18 +6,27 @@ Allows the use of the NodaTime structs in Domain or POCO objects when using NHib
 
 ## Features ##
 ### Supported Databases ###
-  * All databases that support the datetimeoffset data type should work.
+  * Currently we only have support for Microsoft SQL Server.
   * Tested with Microsoft SQL Server 2012 but should work for:
     * Microsoft SQL Server 2008
     * Microsoft SQL Server 2008 R2
     * Microsoft SQL Server 2012
     * Microsoft SQL Server 2014
+  * Database types used that are specific to Microsoft SQL Server are, datetimeoffset, datetime2 and time.
+  * Other database servers may work or partially work but have not been tested.
+  * For example the Instant type uses a bigint (Int64) database type which should work with all database providers.
 
 ### Supported NodaTime Types ###
   + **DateTimeZone**  
     + Implemented by DateTimeZoneTzdbType stored as a nvarchar(35)
   + **Instant**  
     + Implemented by InstantType stored as a bigint
+  + **LocalDate**  
+    + Implemented by LocalDateType stored as a date
+  + **LocalDateTime**  
+    + Implemented by LocalDateTimeType stored as a datetime2
+  + **LocalTime**  
+    + Implemented by LocalTimeType stored as a time
   + **OffsetDateTime**  
     + Implemented by OffsetDateTimeType stored as a datetimeoffset(7)
   + **ZonedDateTime**  
@@ -30,6 +39,11 @@ Allows the use of the NodaTime structs in Domain or POCO objects when using NHib
 
 ## Quick Start ##
 ### NHibernate ###
+
+Install using nuget.
+```
+Install-Package Dematt.Airy.Nhibernate.NodaTime
+```
 
 Given the following class to map.
 ```
@@ -48,11 +62,13 @@ public class ZonedDateTimeTestEntity
     public virtual ZonedDateTime? FinishZonedDateTime { get; set; }
 }
 ```
+
 The mapping code would look like this.
 ```
 var myEntities = new [] {
     typeof(ZonedDateTimeTestEntity)
 };
+
 var modelMapper = new ModelMapper();
 modelMapper.Class<ZonedDateTimeTestEntity>(c =>
 {
@@ -87,7 +103,7 @@ modelMapper.Class<ZonedDateTimeTestEntity>(c =>
 var _configuration = new Configuration();
 _configuration.AddMapping(modelMapper.CompileMappingFor(myEntities));
 
-/// Optional add the linq extension to allow quering by ZonedDateTime.ToDateTimeOffset()
+/// Optional add the linq extension to allow querying by ZonedDateTime.ToDateTimeOffset()
 _configuration.LinqToHqlGeneratorsRegistry<LinqToHqlGeneratorsRegistry>();
 
 var factory = configuration.BuildSessionFactory();
@@ -110,5 +126,3 @@ As noted by the NodaTime project, dates and times are a complicated and extremel
 Every project will have its own unique requirements and rules as to how to handle them, this is not intended to be a global solution to storing NodaTime structs.
 It is inevitably driven be the requirements of the projects I am currently working on.  For example we store the Instant part of a ZonedDateTime as a datetimeoffset and not as a bigint (Int64) because of external reporting requirements of the database where the data is stored.
 Having said all of that if it is missing something you require or you have an issue please do not hesitate to raise a github issue or pull request.
-
-
