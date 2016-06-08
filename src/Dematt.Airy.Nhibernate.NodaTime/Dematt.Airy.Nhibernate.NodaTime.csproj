@@ -69,7 +69,9 @@
     <Compile Include="ZonedDateTimeTzdbType.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Dematt.Airy.Nhibernate.NodaTime.nuspec" />
+    <None Include="Dematt.Airy.Nhibernate.NodaTime.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
