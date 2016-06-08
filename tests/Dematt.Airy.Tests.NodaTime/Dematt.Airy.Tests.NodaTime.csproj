@@ -30,6 +30,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dematt.Airy.Core, Version=2.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Dematt.Airy.Core.2.2.1\lib\net45\Dematt.Airy.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NHibernate.4.0.4.4000\lib\net40\NHibernate.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NodaTime, Version=1.3.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NodaTime.1.3.2\lib\net35-Client\NodaTime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,7 +59,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DateTimeOffsetTests.cs" />
+    <Compile Include="Entities\DateTimeOffsetTestEntity.cs" />
+    <Compile Include="Entities\LocalDateTimeTestEntity.cs" />
+    <Compile Include="Entities\LocalTimeTestEntity.cs" />
+    <Compile Include="Entities\LocalDateTestEntity.cs" />
+    <Compile Include="Entities\ZonedDateTimeTestEntity.cs" />
+    <Compile Include="Entities\InstantTestEntity.cs" />
+    <Compile Include="Entities\LocationTestEntity.cs" />
+    <Compile Include="InstantTests.cs" />
+    <Compile Include="LocalDateTimeTests.cs" />
+    <Compile Include="LocalTimeTests.cs" />
+    <Compile Include="LocalDateTests.cs" />
+    <Compile Include="OneTimeSetup.cs" />
+    <Compile Include="DateTimeZoneTest.cs" />
+    <Compile Include="Entities\OffsetDateTimeTestEntity.cs" />
+    <Compile Include="Entities\DateTimeZoneTestEntity.cs" />
+    <Compile Include="OffsetDateTimeTests.cs" />
+    <Compile Include="PersistenceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionFactoryProvider.cs" />
+    <Compile Include="ZonedDateTimeTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="hibernate.cfg.mssql.appveyor.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="hibernate.cfg.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Dematt.Airy.Nhibernate.NodaTime\Dematt.Airy.Nhibernate.NodaTime.csproj">
+      <Project>{cef2b0de-7a6f-4716-ab05-b1c318211078}</Project>
+      <Name>Dematt.Airy.Nhibernate.NodaTime</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
