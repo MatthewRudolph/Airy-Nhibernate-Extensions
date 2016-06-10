@@ -1,9 +1,17 @@
+Release v1.1.0
+=============================
+
+## Features ##
+    **Dematt.Airy.Nhibernate.NodaTime**
+        * Add support for the following Noda Time structures.
+          + Offset
+
 Release v1.0.0
 =============================
 
 ## Features ##
     **Dematt.Airy.Nhibernate.NodaTime**
-        * Custom NHibernate UserType and Composite User Types for the following NodaTime structs.
+        * Custom NHibernate UserType and Composite User Types for the following Noda Time structures.
           + DateTimeZone
           + Instant
           + LocalDate
