@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
 using NHibernate;
 using NHibernate.SqlTypes;
 using NHibernate.UserTypes;
@@ -9,13 +8,13 @@ using NodaTime;
 namespace Dematt.Airy.Nhibernate.NodaTime
 {
     /// <summary>
-    /// An NHibernate Custom User Type for the NodaTime <see cref="LocalTime"/> struct.    
+    /// An NHibernate Custom User Type for the NodaTime <see cref="Offset"/> struct.
     /// </summary>
     /// <remarks>
-    /// This allows the NodaTime LocalTime struct to be used as properties in the domain and mapped using Nhibernate.
-    /// It will be store it in the database in a single field with a data type of time.
+    /// This allows the NodaTime Offset struct to be used as properties in the domain and mapped using Nhibernate.
+    /// It will be store it in the database in a single field with a data type of int.
     /// </remarks>
-    public class LocalTimeType : ImmutableUserType, IUserType
+    public class OffsetType : ImmutableUserType, IUserType
     {
         /// <summary>
         /// The SqlType used to store the data in the database.
@@ -30,7 +29,7 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         {
             get
             {
-                return new[] { SqlTypeFactory.Time };
+                return new[] { SqlTypeFactory.Int32 };
             }
         }
 
@@ -39,7 +38,7 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         /// </summary>
         public Type ReturnedType
         {
-            get { return typeof(LocalTime); }
+            get { return typeof(Offset); }
         }
 
         /// <summary>
@@ -51,12 +50,12 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         /// <param name="owner">The containing entity.</param>        
         public object NullSafeGet(IDataReader rs, string[] names, object owner)
         {
-            var value = NHibernateUtil.TimeAsTimeSpan.NullSafeGet(rs, names);
+            var value = NHibernateUtil.Int32.NullSafeGet(rs, names);
             if (value == null)
             {
                 return null;
             }
-            return LocalTime.FromTicksSinceMidnight(((TimeSpan)value).Ticks);
+            return Offset.FromMilliseconds(((int)value));
         }
 
         /// <summary>
@@ -72,7 +71,7 @@ namespace Dematt.Airy.Nhibernate.NodaTime
             // We have to cast to SqlParameter instead of IDataParameter because...
             // The MS data provider takes the DbType of DbType.Time to be DateTime not TimeSpan.
             // Therefore we cast to SqlParamater here and below set the SqlDbType (instead of the DbType) to be SqlDbType.Time
-            var parm = (SqlParameter)cmd.Parameters[index];
+            var parm = (IDataParameter)cmd.Parameters[index];
 
             if (value == null)
             {
@@ -80,8 +79,8 @@ namespace Dematt.Airy.Nhibernate.NodaTime
             }
             else
             {
-                parm.SqlDbType = SqlDbType.Time;
-                parm.Value = new TimeSpan(((LocalTime)value).TickOfDay);
+                parm.DbType = DbType.Int32;
+                parm.Value = ((Offset)value).Milliseconds;
             }
         }
 

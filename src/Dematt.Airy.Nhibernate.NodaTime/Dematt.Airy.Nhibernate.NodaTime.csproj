@@ -59,6 +59,7 @@
     <Compile Include="ImmutableUserType.cs" />
     <Compile Include="InstantType.cs" />
     <Compile Include="LocalDateTimeType.cs" />
+    <Compile Include="OffsetType.cs" />
     <Compile Include="LocalTimeType.cs" />
     <Compile Include="LocalDateType.cs" />
     <Compile Include="OffsetDateTimeType.cs" />
@@ -69,7 +70,9 @@
     <Compile Include="ZonedDateTimeTzdbType.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Dematt.Airy.Nhibernate.NodaTime.nuspec" />
+    <None Include="Dematt.Airy.Nhibernate.NodaTime.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -10,10 +10,14 @@
     <projectUrl>https://github.com/MatthewRudolph/Airy-Nhibernate-Extensions</projectUrl>
     <iconUrl>https://raw.github.com/MatthewRudolph/Airy-Nhibernate-Extensions/master/AiryNugetIcon128x128.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>$description$</description>
+    <description>Provides Noda Time support for NHibernate.</description>
+    <summary>
+      NHibenrate Custom UserType and Custom CompositeUserType implementations of the NodaTime classes and structures.
+      Allows the use of the Noda Time classes and structures in Domain or POCO objects when using NHibernate for data access.
+    </summary>
     <releaseNotes>Release Summary: https://github.com/MatthewRudolph/Airy-Nhibernate-Extensions/blob/master/ReleaseNotes.txt </releaseNotes>
     <copyright>Copyright 2016</copyright>
-    <tags>NodaTime NHibernate Airy</tags>
+    <tags>NodaTime NHibernate Noda Airy</tags>
     <dependencies>   
       
       <!-- We have only tested with NodaTime 1.3.2, and pretty sure that we would be incompatible with the 2.0 when it is released,
