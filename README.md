@@ -31,6 +31,8 @@ Allows the use of the Noda Time classes and structures in Domain or POCO objects
     + Implemented by LocalDateTimeType stored as a datetime2
   + **LocalTime**  
     + Implemented by LocalTimeType stored as a time
+  + **Offset**
+    + Implemented by OffsetType stored as a int
   + **OffsetDateTime**  
     + Implemented by OffsetDateTimeType stored as a datetimeoffset(7)
   + **ZonedDateTime**  
