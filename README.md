@@ -5,8 +5,8 @@
 
 ## About ##
 Provides Noda Time support for NHibernate.  
-NHibenrate Custom UserType and Custom CompositeUserType implementations of the NodaTime structs.  
-Allows the use of the NodaTime structs in Domain or POCO objects when using NHiberate for data access (ORM).
+NHibenrate Custom UserType and Custom CompositeUserType implementations of the NodaTime classes and structures.  
+Allows the use of the Noda Time classes and structures in Domain or POCO objects when using NHibernate for data access.
 
 ## Features ##
 ### Supported Databases ###

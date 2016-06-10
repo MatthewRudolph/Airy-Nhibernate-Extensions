@@ -219,6 +219,26 @@ namespace Dematt.Airy.Tests.NodaTime
                     });
                 });
 
+                domainMapper.Class<OffsetTestEntity>(c =>
+                {
+                    c.Id(p => p.Id, m =>
+                    {
+                        m.Generator(Generators.Native);
+                    });
+                    c.Property(p => p.Description, m =>
+                    {
+                        m.Length(100);
+                    });
+                    c.Property(p => p.StartOffset, m =>
+                    {
+                        m.Type<OffsetType>();
+                    });
+                    c.Property(p => p.FinishOffset, m =>
+                    {
+                        m.Type<OffsetType>();
+                    });
+                });
+
                 domainMapper.Class<OffsetDateTimeTestEntity>(c =>
                 {
                     c.Id(p => p.Id, m =>
