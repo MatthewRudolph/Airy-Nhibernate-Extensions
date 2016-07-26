@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Dematt.Airy.Nhibernate.NodaTime;
 using Dematt.Airy.Tests.NodaTime.Entities;
 using NHibernate;
@@ -87,6 +88,7 @@ namespace Dematt.Airy.Tests.NodaTime
         /// Can we query for an DateTimeZone in the database using LINQ == logic.
         /// </summary>
         [Test]
+        [SuppressMessage("ReSharper", "PossibleUnintendedReferenceComparison")]
         public void Can_Query_By_Equals_DateTimeZone_Stored_As_String()
         {
             var systemTimeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
@@ -109,7 +111,6 @@ namespace Dematt.Airy.Tests.NodaTime
             using (ISession session = SessionFactory.OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
             {
-                // ReSharper disable once PossibleUnintendedReferenceComparison
                 var query = session.Query<DateTimeZoneTestEntity>().Where(x => x.StartDateTimeZone == systemTimeZone);
                 var retrievedEvent = query.SingleOrDefault();
                 transaction.Commit();
@@ -121,7 +122,6 @@ namespace Dematt.Airy.Tests.NodaTime
             using (ITransaction transaction = session.BeginTransaction())
             {
                 var macthTimeZone = DateTimeZoneProviders.Tzdb.GetZoneOrNull("Europe/Madrid");
-                // ReSharper disable once PossibleUnintendedReferenceComparison
                 var query = session.Query<DateTimeZoneTestEntity>().Where(x => x.FinishDateTimeZone == macthTimeZone);
                 var retrievedEvent = query.SingleOrDefault();
                 transaction.Commit();
