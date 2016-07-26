@@ -65,10 +65,29 @@
   <ItemGroup>
     <Compile Include="Entities\MoneyTestEntity.cs" />
     <Compile Include="MoneyTest.cs" />
+    <Compile Include="OneTimeSetup.cs" />
+    <Compile Include="PersistenceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionFactoryProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="hibernate.cfg.mssql.appveyor.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="hibernate.cfg.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Dematt.Airy.Nhibernate.NodaMoney\Dematt.Airy.Nhibernate.NodaMoney.csproj">
+      <Project>{cf789c04-b6ae-4684-b475-80ee207170b8}</Project>
+      <Name>Dematt.Airy.Nhibernate.NodaMoney</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
