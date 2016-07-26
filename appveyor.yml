@@ -22,6 +22,8 @@
       
       .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.xml'
 
+      .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaMoney\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaMoney\hibernate.cfg.xml'
+
       nuget restore
   build:
     publish_nuget: true
@@ -50,6 +52,8 @@
       .\tools\SetVersion.ps1 $versionToUse Beta
       
       .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.xml'
+
+      .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaMoney\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaMoney\hibernate.cfg.xml'
 
       nuget restore
   build:
@@ -80,6 +84,8 @@
       .\tools\SetVersion.ps1 $versionToUse Alpha
 
       .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.xml'
+
+      .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaMoney\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaMoney\hibernate.cfg.xml'
       
       nuget restore
   build:
