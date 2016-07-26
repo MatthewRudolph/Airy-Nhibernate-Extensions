@@ -30,6 +30,7 @@
   before_test:
   - ps: >-
       .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaTime'
+
       .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaMoney'
 
 ### CONFIGURATION FOR RELEASE BRANCHES (Pre-release builds and deployments) ###
@@ -58,6 +59,7 @@
   before_test:
   - ps: >-
       .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaTime'
+
       .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaMoney'
 
 ### CONFIGURATION FOR ALL OTHER BRANCHES (i.e. dev, feature and hotfix) ###
@@ -86,4 +88,5 @@
   before_test:
   - ps: >-
       .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaTime'
+
       .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaMoney'
