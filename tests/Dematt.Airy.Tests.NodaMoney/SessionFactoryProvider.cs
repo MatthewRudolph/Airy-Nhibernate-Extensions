@@ -105,6 +105,11 @@ namespace Dematt.Airy.Tests.NodaMoney
                         m.Type<MoneyType>();
                         m.Columns(f => f.Name("CostAmount"), f => f.Name("CostCurrency"));
                     });
+                    c.Property(p => p.Retail, m =>
+                    {
+                        m.Type<MoneyType>();
+                        m.Columns(f => f.Name("RetailAmount"), f => f.Name("RetailCurrency"));
+                    });
                 });
 
                 // Build and the mappings for the test domain entities.

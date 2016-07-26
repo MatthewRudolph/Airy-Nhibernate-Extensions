@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Policy;
 using Dematt.Airy.Core;
 using NodaMoney;
 
@@ -10,5 +9,7 @@ namespace Dematt.Airy.Tests.NodaMoney.Entities
         public virtual string Description { get; set; }
 
         public virtual Money Cost { get; set; }
+
+        public virtual Money? Retail { get; set; }
     }
 }
