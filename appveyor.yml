@@ -30,6 +30,7 @@
   before_test:
   - ps: >-
       .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaTime'
+      .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaMoney'
 
 ### CONFIGURATION FOR RELEASE BRANCHES (Pre-release builds and deployments) ###
 ### This should be a Debug build but with symbols built for the nuget packages so they can be released as pre-release to nuget.org ###
@@ -57,6 +58,7 @@
   before_test:
   - ps: >-
       .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaTime'
+      .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaMoney'
 
 ### CONFIGURATION FOR ALL OTHER BRANCHES (i.e. dev, feature and hotfix) ###
 ### This should be a Debug build for internal testing only.  Artifacts should not be released into the 'wild' ###
@@ -84,3 +86,4 @@
   before_test:
   - ps: >-
       .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaTime'
+      .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaMoney'
