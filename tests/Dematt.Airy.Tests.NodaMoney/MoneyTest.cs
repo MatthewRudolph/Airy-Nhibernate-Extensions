@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Dematt.Airy.Nhibernate.NodaMoney.Extensions;
 using Dematt.Airy.Tests.NodaMoney.Entities;
 using NHibernate;
+using NHibernate.Linq;
 using NodaMoney;
 using NUnit.Framework;
 
@@ -151,6 +154,84 @@ namespace Dematt.Airy.Tests.NodaMoney
             Assert.That(retrievedTestMoney, Is.EqualTo(testMoney));
             Assert.That(retrievedTestMoney.Cost, Is.EqualTo(testMoney.Cost));
             Assert.That(retrievedTestMoney.Retail, Is.EqualTo(testMoney.Retail));
+        }
+
+        [Test]
+        public void Can_Query_By_Equals_Money_Stored_As_Decimal_And_String()
+        {
+            MoneyTestEntity testMoney;
+            MoneyTestEntity retrievedTestMoney;
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                Money cost = new Money(150.00m, "GBP");
+                Money retail = cost + new Money(0.01m, "GBP");
+                testMoney = new MoneyTestEntity
+                {
+                    Description = "Can_Query_By_Equals_Money_Stored_As_Decimal_And_String",
+                    Cost = cost,
+                    Retail = retail
+                };
+                session.Save(testMoney);
+                transaction.Commit();
+                Assert.That(testMoney.Id, Is.Not.Null);
+            }
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                var query = session.Query<MoneyTestEntity>().Where(x => x.Cost == new Money(150.00m, "GBP"));
+
+                retrievedTestMoney = query.SingleOrDefault();
+                transaction.Commit();
+            }
+            Assert.That(retrievedTestMoney, Is.Not.Null);
+            Assert.That(retrievedTestMoney, Is.EqualTo(testMoney));
+            if (retrievedTestMoney != null)
+            {
+                Assert.That(retrievedTestMoney.Cost, Is.EqualTo(testMoney.Cost));
+                Assert.That(retrievedTestMoney.Retail, Is.EqualTo(testMoney.Retail));
+            }
+        }
+
+        [Test]
+        public void Can_Query_By_MoreThan_Money_Stored_As_Decimal_And_String()
+        {
+            MoneyTestEntity testMoney;
+            MoneyTestEntity retrievedTestMoney;
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                Money cost = new Money(800000000.00m, "GBP");
+                Money retail = cost + new Money(0.01m, "GBP");
+                testMoney = new MoneyTestEntity
+                {
+                    Description = "Can_Query_By_MoreThan_Money_Stored_As_Decimal_And_String",
+                    Cost = cost,
+                    Retail = retail
+                };
+                session.Save(testMoney);
+                transaction.Commit();
+                Assert.That(testMoney.Id, Is.Not.Null);
+            }
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                var query = session.Query<MoneyTestEntity>().Where(x => x.Retail.Value.Amount > 800000000.00m && x.Retail.Value.GetCurrencyCode() == "GBP");
+
+                retrievedTestMoney = query.SingleOrDefault();
+                transaction.Commit();
+            }
+            Assert.That(retrievedTestMoney, Is.Not.Null);
+            Assert.That(retrievedTestMoney, Is.EqualTo(testMoney));
+            if (retrievedTestMoney != null)
+            {
+                Assert.That(retrievedTestMoney.Cost, Is.EqualTo(testMoney.Cost));
+                Assert.That(retrievedTestMoney.Retail, Is.EqualTo(testMoney.Retail));
+            }
         }
     }
 }

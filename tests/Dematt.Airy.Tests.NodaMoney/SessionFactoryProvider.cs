@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using Dematt.Airy.Nhibernate.NodaMoney;
+using Dematt.Airy.Nhibernate.NodaMoney.Helpers;
 using Dematt.Airy.Tests.NodaMoney.Entities;
 using NHibernate;
 using NHibernate.Cfg;
@@ -114,6 +115,8 @@ namespace Dematt.Airy.Tests.NodaMoney
 
                 // Build and the mappings for the test domain entities.
                 _configuration.AddMapping(domainMapper.CompileMappingFor(domainTypes));
+
+                _configuration.LinqToHqlGeneratorsRegistry<LinqToHqlRegisterMoney>();
 
                 _configuration.DataBaseIntegration(x =>
                 {
