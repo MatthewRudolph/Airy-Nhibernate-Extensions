@@ -9,7 +9,8 @@ namespace Dematt.Airy.Nhibernate.NodaMoney.Helpers
         {
             this.Merge(new MoneyAmountHqlGenerator());
             this.Merge(new MoneyCurrencyHqlGenerator());
-            this.Merge(new MoneyCurrencyPropertyHqlGenerator());
+            this.Merge(new MoneyToAmountCodeHqlGenerator());
+            this.Merge(new MoneyToCurrencyCodeHqlGenerator());
         }
     }
 }

@@ -57,8 +57,9 @@
   <ItemGroup>
     <Compile Include="Extensions\MoneyExtensions.cs" />
     <Compile Include="Helpers\LinqToHqlRegisterMoney.cs" />
-    <Compile Include="Helpers\MoneyCurrencyPropertyHqlGenerator.cs" />
     <Compile Include="Helpers\MoneyCurrencyHqlGenerator.cs" />
+    <Compile Include="Helpers\MoneyToAmountCodeHqlGenerator.cs" />
+    <Compile Include="Helpers\MoneyToCurrencyCodeHqlGenerator.cs" />
     <Compile Include="Helpers\MoneyAmountHqlGenerator.cs" />
     <Compile Include="ImmutableCompositeUserType.cs" />
     <Compile Include="MoneyType.cs" />

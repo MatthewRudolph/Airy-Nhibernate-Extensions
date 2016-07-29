@@ -220,7 +220,7 @@ namespace Dematt.Airy.Tests.NodaMoney
             using (ISession session = SessionFactory.OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
             {
-                var query = session.Query<MoneyTestEntity>().Where(x => x.Retail.Value.Amount > 800000000.00m && x.Retail.Value.GetCurrencyCode() == "GBP");
+                var query = session.Query<MoneyTestEntity>().Where(x => x.Retail.Value.Amount > 800000000.00m && x.Retail.Value.ToCurrencyCode() == "GBP");
 
                 retrievedTestMoney = query.SingleOrDefault();
                 transaction.Commit();

@@ -12,8 +12,7 @@ namespace Dematt.Airy.Nhibernate.NodaMoney.Helpers
     {
         private static readonly HashSet<MemberInfo> SelectedProperties = new HashSet<MemberInfo>
         {
-            typeof(Money).GetProperty("Amount")
-            //typeof(Money).GetProperty("Currency").GetType().GetProperty("Code")
+            typeof(Money).GetProperty("Amount")            
         };
 
         public MoneyAmountHqlGenerator()
