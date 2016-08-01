@@ -5,7 +5,6 @@
 
 ## About ##
 Seperate libraries that provide Noda Time and Noda Money support for NHibernate.  
-
 NHibenrate Custom UserType and Custom CompositeUserType implementations of the NodaTime classes and structures.  
 NHibenrate Custom CompositeUserType implementations of the NodaMoney classes and structures.  
 
