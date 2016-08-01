@@ -1,3 +1,29 @@
+Release v2.0.0
+=============================
+
+## Breaking Changes ##
+  **Dematt.Airy.Nhibernate.NodaTime**
+    * The LinqToHqlGeneratorsRegistry class has been renamed to LinqToHqlRegisterNodaTime
+      It should now be called in the following way: _configuration.LinqToHqlGeneratorsRegistry<LinqToHqlRegisterNodaTime>(); when building your session factory.
+      This is to bring it in line with the new naming schema used by the NodaMoney extensions and give it a more meaningful name.
+
+## Features ##
+    **Dematt.Airy.Nhibernate.NodaTime**
+      * None
+
+    **Dematt.Airy.Nhibernate.NodaMoney**
+      * New library
+      * Custom NHibernate Composite User Types for the following Noda Money structures.
+        + Money
+
+## Bugs ##
+    **Dematt.Airy.Nhibernate.NodaTime**
+      * None
+
+    **Dematt.Airy.Nhibernate.NodaMoney**
+      * None
+
+
 Release v1.1.0
 =============================
 
