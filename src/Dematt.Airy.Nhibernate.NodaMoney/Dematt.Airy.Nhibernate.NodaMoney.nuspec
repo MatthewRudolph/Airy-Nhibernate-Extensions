@@ -22,7 +22,7 @@
       
       <!-- We have only tested with NodaMoney 0.6.0, and pretty sure that we would be incompatible with the 1.0 when it is released,
            but we should be ok for any future 0.x.x releases. -->
-      <dependency id="NodaTime" version="[0.6.0,1)" />
+      <dependency id="NodaMoney" version="[0.6.0,1)" />
       
       <!-- For Nhibernate we are OK with anything greater than the current 4.0 release, but for safety not any future 5.0 releases. -->
       <dependency id="NHibernate" version="[4.0.4.4000,5)" />
