@@ -11,20 +11,32 @@ using NodaMoney;
 
 namespace Dematt.Airy.Nhibernate.NodaMoney.Helpers
 {
+    /// <summary>
+    /// Class that extends the NHiberate Linq Provider to allow the Money.ToCurrencyCode Extension Method to be used in Linq queries.
+    /// </summary>
+    /// <remarks>Use the <see cref="LinqToHqlRegisterMoney"/> class to register this generator with Nhibernate.</remarks>
     public class MoneyToCurrencyCodeHqlGenerator : BaseHqlGeneratorForMethod
     {
+        /// <summary>
+        /// Gets the methods that are supported by this Linq extension.
+        /// </summary>
         private static readonly HashSet<MethodInfo> ActingMethods = new HashSet<MethodInfo>
         {
             // The method calls are used only to get info about the signature, any parameters are just ignored.
             ReflectionHelper.GetMethodDefinition<Money>(x => x.ToCurrencyCode())            
         };
 
+        /// <summary>
+        /// Constructor sets the supported methods.
+        /// </summary>
         public MoneyToCurrencyCodeHqlGenerator()
         {
             SupportedMethods = ActingMethods;
         }
 
-
+        /// <summary>
+        /// Overrides the BuildHql method to add an expression that supports Linq querying of the supported methods. 
+        /// </summary>
         public override HqlTreeNode BuildHql(MethodInfo method, Expression targetObject, ReadOnlyCollection<Expression> arguments,
             HqlTreeBuilder treeBuilder, IHqlExpressionVisitor visitor)
         {
