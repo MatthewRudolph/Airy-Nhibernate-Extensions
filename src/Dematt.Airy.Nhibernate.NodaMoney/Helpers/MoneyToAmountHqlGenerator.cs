@@ -15,7 +15,7 @@ namespace Dematt.Airy.Nhibernate.NodaMoney.Helpers
     /// Class that extends the NHiberate Linq Provider to allow the Money.ToAmount Extension Method to be used in Linq queries.
     /// </summary>
     /// <remarks>Use the <see cref="LinqToHqlRegisterMoney"/> class to register this generator with Nhibernate.</remarks>
-    public class MoneyToAmountCodeHqlGenerator : BaseHqlGeneratorForMethod
+    public class MoneyToAmountHqlGenerator : BaseHqlGeneratorForMethod
     {
         /// <summary>
         /// Gets the methods that are supported by this Linq extension.
@@ -29,7 +29,7 @@ namespace Dematt.Airy.Nhibernate.NodaMoney.Helpers
         /// <summary>
         /// Constructor sets the supported methods.
         /// </summary>
-        public MoneyToAmountCodeHqlGenerator()
+        public MoneyToAmountHqlGenerator()
         {
             SupportedMethods = ActingMethods;
         }

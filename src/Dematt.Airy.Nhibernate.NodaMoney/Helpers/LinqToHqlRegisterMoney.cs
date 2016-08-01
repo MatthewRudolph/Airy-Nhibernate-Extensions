@@ -16,7 +16,7 @@ namespace Dematt.Airy.Nhibernate.NodaMoney.Helpers
         public LinqToHqlRegisterMoney()
         {
             this.Merge(new MoneyAmountHqlGenerator());
-            this.Merge(new MoneyToAmountCodeHqlGenerator());
+            this.Merge(new MoneyToAmountHqlGenerator());
             this.Merge(new MoneyToCurrencyCodeHqlGenerator());
         }
     }
