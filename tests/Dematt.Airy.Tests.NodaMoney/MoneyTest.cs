@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Schema;
 using Dematt.Airy.Nhibernate.NodaMoney.Extensions;
 using Dematt.Airy.Tests.NodaMoney.Entities;
 using NHibernate;
@@ -232,6 +233,112 @@ namespace Dematt.Airy.Tests.NodaMoney
                 Assert.That(retrievedTestMoney.Cost, Is.EqualTo(testMoney.Cost));
                 Assert.That(retrievedTestMoney.Retail, Is.EqualTo(testMoney.Retail));
             }
+        }
+
+        [Test]
+        public void Can_Query_By_LessThan_Money_Stored_As_Decimal_And_String()
+        {
+            MoneyTestEntity testMoney;
+            MoneyTestEntity retrievedTestMoney;
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                Money cost = new Money(-800000000.00m, "USD");
+                Money retail = cost + new Money(-0.01m, "USD");
+                testMoney = new MoneyTestEntity
+                {
+                    Description = "Can_Query_By_LessThan_Money_Stored_As_Decimal_And_String",
+                    Cost = cost,
+                    Retail = retail
+                };
+                session.Save(testMoney);
+                transaction.Commit();
+                Assert.That(testMoney.Id, Is.Not.Null);
+            }
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                var query = session.Query<MoneyTestEntity>().Where(x => x.Retail.Value.Amount < -800000000.00m && x.Retail.Value.ToCurrencyCode() == "USD");
+
+                retrievedTestMoney = query.SingleOrDefault();
+                transaction.Commit();
+            }
+            Assert.That(retrievedTestMoney, Is.Not.Null);
+            Assert.That(retrievedTestMoney, Is.EqualTo(testMoney));
+            if (retrievedTestMoney != null)
+            {
+                Assert.That(retrievedTestMoney.Cost, Is.EqualTo(testMoney.Cost));
+                Assert.That(retrievedTestMoney.Retail, Is.EqualTo(testMoney.Retail));
+            }
+        }
+
+        [Test]
+        public void Can_Query_By_Sum_Money_Stored_As_Decimal_And_String()
+        {
+            MoneyTestEntity testMoney;
+            decimal? total;
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                Money cost = new Money(-800000000.00m, "USD");
+                Money retail = cost + new Money(-0.01m, "USD");
+                testMoney = new MoneyTestEntity
+                {
+                    Description = "Can_Query_By_Sum_Money_Stored_As_Decimal_And_String",
+                    Cost = cost,
+                    Retail = retail
+                };
+                session.Save(testMoney);
+                transaction.Commit();
+                Assert.That(testMoney.Id, Is.Not.Null);
+            }
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                var query = session.Query<MoneyTestEntity>().Select(x => x.Cost).Sum(x => x.Amount);
+                total = query;
+                transaction.Commit();
+            }
+            Assert.That(total, Is.Not.Null);
+        }
+
+        [Test]
+        public void Can_Query_By_Sum_And_Filter_Money_Stored_As_Decimal_And_String()
+        {
+            MoneyTestEntity testMoney;
+            decimal? total;
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                Money cost = new Money(-800000000.00m, "USD");
+                Money retail = cost + new Money(-0.01m, "USD");
+                testMoney = new MoneyTestEntity
+                {
+                    Description = "Can_Query_By_Sum_And_Filter_Money_Stored_As_Decimal_And_String",
+                    Cost = cost,
+                    Retail = retail
+                };
+                session.Save(testMoney);
+                transaction.Commit();
+                Assert.That(testMoney.Id, Is.Not.Null);
+            }
+
+            using (ISession session = SessionFactory.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                var query = session.Query<MoneyTestEntity>()
+                    .Where(x => x.Cost.ToCurrencyCode() == "GBP")
+                    .Select(x => x.Cost)
+                    .Sum(x => x.Amount);
+                total = query;
+                transaction.Commit();
+            }
+            Assert.That(total, Is.Not.Null);
         }
     }
 }
