@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Schema;
 using Dematt.Airy.Nhibernate.NodaMoney.Extensions;
 using Dematt.Airy.Tests.NodaMoney.Entities;
 using NHibernate;
@@ -12,6 +11,9 @@ namespace Dematt.Airy.Tests.NodaMoney
 {
     public class MoneyTest : PersistenceTest
     {
+        /// <summary>
+        /// Can we create an instance of the Noda Money struct.
+        /// </summary>
         [Test]
         public void Can_Create_Instances_Of_Money()
         {
@@ -23,6 +25,9 @@ namespace Dematt.Airy.Tests.NodaMoney
             Assert.That(fullMoney, Is.Not.Null);
         }
 
+        /// <summary>
+        /// Can we get a list of currency supported by NodaMOney.
+        /// </summary>
         [Test]
         public void Can_Get_A_List_Of_Currencies()
         {
@@ -157,6 +162,9 @@ namespace Dematt.Airy.Tests.NodaMoney
             Assert.That(retrievedTestMoney.Retail, Is.EqualTo(testMoney.Retail));
         }
 
+        /// <summary>
+        /// Can we Query by equals a Money object stored as a Decimal for the amount and a string for the Currency code.
+        /// </summary>
         [Test]
         public void Can_Query_By_Equals_Money_Stored_As_Decimal_And_String()
         {
@@ -196,6 +204,9 @@ namespace Dematt.Airy.Tests.NodaMoney
             }
         }
 
+        /// <summary>
+        /// Can we Query by more than a Money object stored as a Decimal for the amount and a string for the Currency code.
+        /// </summary>
         [Test]
         public void Can_Query_By_MoreThan_Money_Stored_As_Decimal_And_String()
         {
@@ -235,6 +246,9 @@ namespace Dematt.Airy.Tests.NodaMoney
             }
         }
 
+        /// <summary>
+        /// Can we Query by less than a Money object stored as a Decimal for the amount and a string for the Currency code.
+        /// </summary>
         [Test]
         public void Can_Query_By_LessThan_Money_Stored_As_Decimal_And_String()
         {
@@ -274,10 +288,12 @@ namespace Dematt.Airy.Tests.NodaMoney
             }
         }
 
+        /// <summary>
+        /// Can we Query and aggregate using Sum a Money objects stored as a Decimal for the amount and a string for the Currency code.
+        /// </summary>
         [Test]
         public void Can_Query_By_Sum_Money_Stored_As_Decimal_And_String()
         {
-            MoneyTestEntity testMoney;
             decimal? total;
 
             using (ISession session = SessionFactory.OpenSession())
@@ -285,7 +301,7 @@ namespace Dematt.Airy.Tests.NodaMoney
             {
                 Money cost = new Money(-800000000.00m, "USD");
                 Money retail = cost + new Money(-0.01m, "USD");
-                testMoney = new MoneyTestEntity
+                var testMoney = new MoneyTestEntity
                 {
                     Description = "Can_Query_By_Sum_Money_Stored_As_Decimal_And_String",
                     Cost = cost,
@@ -306,10 +322,12 @@ namespace Dematt.Airy.Tests.NodaMoney
             Assert.That(total, Is.Not.Null);
         }
 
+        /// <summary>
+        /// Can we Query and aggregate using Sum with a filter a Money objects stored as a Decimal for the amount and a string for the Currency code.
+        /// </summary>
         [Test]
         public void Can_Query_By_Sum_And_Filter_Money_Stored_As_Decimal_And_String()
         {
-            MoneyTestEntity testMoney;
             decimal? total;
 
             using (ISession session = SessionFactory.OpenSession())
@@ -317,7 +335,7 @@ namespace Dematt.Airy.Tests.NodaMoney
             {
                 Money cost = new Money(-800000000.00m, "USD");
                 Money retail = cost + new Money(-0.01m, "USD");
-                testMoney = new MoneyTestEntity
+                var testMoney = new MoneyTestEntity
                 {
                     Description = "Can_Query_By_Sum_And_Filter_Money_Stored_As_Decimal_And_String",
                     Cost = cost,
