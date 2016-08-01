@@ -5,10 +5,12 @@
 
 ## About ##
 Seperate libraries that provide Noda Time and Noda Money support for NHibernate.  
+
 NHibenrate Custom UserType and Custom CompositeUserType implementations of the NodaTime classes and structures.  
 NHibenrate Custom CompositeUserType implementations of the NodaMoney classes and structures.  
-Allows the use of the Noda Time and Noda Money classes and structures in Domain or POCO objects when using NHibernate for data access.
-**Warning version 2.0 contains one small breaking change please see the [release notes](https://github.com/MatthewRudolph/Airy-Nhibernate-Extensions/blob/release/v2.0.0/ReleaseNotes.txt).**  
+
+Allows the use of the Noda Time and Noda Money classes and structures in Domain or POCO objects when using NHibernate for data access.  
+**Warning version 2.0 contains a small breaking change please see the [release notes](https://github.com/MatthewRudolph/Airy-Nhibernate-Extensions/blob/release/v2.0.0/ReleaseNotes.txt).**  
 *The LinqToHqlGeneratorsRegistry class has been renamed to LinqToHqlRegisterNodaTime*
 
 ## Features ##
