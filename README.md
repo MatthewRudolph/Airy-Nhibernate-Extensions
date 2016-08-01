@@ -1,15 +1,13 @@
-# Dematt.Airy.Nhibernate.NodaTime #
-# Dematt.Airy.Nhibernate.NodaMoney #
+# Airy Nhibernate Extensions #
+## NodaTime and NodaMoney support for Nhibernate ##
 
 [![Build status](https://ci.appveyor.com/api/projects/status/x9ed1fnac4pllcd7/branch/master?svg=true&passingText=master%20-%20passing&failingText=master%20-%20failing&pendingText=master%20-%20pending)](https://ci.appveyor.com/project/MatthewRudolph/airy-nhibernate-extensions/branch/master)
 [![Build status](https://ci.appveyor.com/api/projects/status/x9ed1fnac4pllcd7/branch/dev?svg=true&passingText=dev%20-%20passing&failingText=dev%20-%20failing&pendingText=dev%20-%20pending)](https://ci.appveyor.com/project/MatthewRudolph/airy-nhibernate-extensions/branch/dev)
 
 ## About ##
-Seperate libraries that provide Noda Time and Noda Money support for NHibernate.  
-NHibenrate Custom UserType and Custom CompositeUserType implementations of the NodaTime classes and structures.  
-NHibenrate Custom CompositeUserType implementations of the NodaMoney classes and structures.  
-
+Libraries that provide Noda Time and Noda Money support for NHibernate.  
 Allows the use of the Noda Time and Noda Money classes and structures in Domain or POCO objects when using NHibernate for data access.  
+
 **Warning version 2.0 contains a small breaking change please see the [release notes](https://github.com/MatthewRudolph/Airy-Nhibernate-Extensions/blob/release/v2.0.0/ReleaseNotes.txt).**  
 *The LinqToHqlGeneratorsRegistry class has been renamed to LinqToHqlRegisterNodaTime*
 
