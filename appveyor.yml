@@ -11,7 +11,7 @@
     only:
       - master
   
-  version: 1.1.0.{build}
+  version: 2.0.0.{build}
   services: mssql2014
   configuration: Release
   before_build:
@@ -22,6 +22,8 @@
       
       .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.xml'
 
+      .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaMoney\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaMoney\hibernate.cfg.xml'
+
       nuget restore
   build:
     publish_nuget: true
@@ -30,6 +32,8 @@
   before_test:
   - ps: >-
       .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaTime'
+
+      .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaMoney'
 
 ### CONFIGURATION FOR RELEASE BRANCHES (Pre-release builds and deployments) ###
 ### This should be a Debug build but with symbols built for the nuget packages so they can be released as pre-release to nuget.org ###
@@ -39,7 +43,7 @@
       - /release.*/
       - v([0-9]+)\.([0-9]+)\.([0-9]+)
   
-  version: 1.1.0.{build}
+  version: 2.0.0.{build}
   services: mssql2014
   before_build:
   - ps: >-
@@ -49,6 +53,8 @@
       
       .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.xml'
 
+      .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaMoney\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaMoney\hibernate.cfg.xml'
+
       nuget restore
   build:
     publish_nuget: true
@@ -57,6 +63,8 @@
   before_test:
   - ps: >-
       .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaTime'
+
+      .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaMoney'
 
 ### CONFIGURATION FOR ALL OTHER BRANCHES (i.e. dev, feature and hotfix) ###
 ### This should be a Debug build for internal testing only.  Artifacts should not be released into the 'wild' ###
@@ -67,7 +75,7 @@
       - /release.*/
       - v([0-9]+)\.([0-9]+)\.([0-9]+)
   
-  version: 1.1.0.{build}
+  version: 2.0.0.{build}
   services: mssql2014
   before_build:
   - ps: >-
@@ -76,6 +84,8 @@
       .\tools\SetVersion.ps1 $versionToUse Alpha
 
       .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaTime\hibernate.cfg.xml'
+
+      .\tools\ReplaceFile.ps1 'tests\Dematt.Airy.Tests.NodaMoney\hibernate.cfg.mssql.appveyor.xml' 'tests\Dematt.Airy.Tests.NodaMoney\hibernate.cfg.xml'
       
       nuget restore
   build:
@@ -84,3 +94,5 @@
   before_test:
   - ps: >-
       .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaTime'
+
+      .\tools\CreateSqlDatabase.ps1 'LOCALHOST\SQL2014' 'NhibernateNodaMoney'

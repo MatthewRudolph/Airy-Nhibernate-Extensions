@@ -29,6 +29,9 @@ namespace Dematt.Airy.Nhibernate.NodaTime.Helpers
         public ZonedDateTimeGtLtGenerator()
         {
             SupportedMethods = ActingMethods.ToArray();
+
+            //SupportedMethods = typeof(ZonedDateTime).GetMethods().Where(m => m.Name == "CompareTo").ToArray();
+            //SupportedMethods = typeof(ZonedDateTime).GetMethods().Where(m => m.Name.Contains("Than")).ToArray();
         }
 
         public override HqlTreeNode BuildHql(MethodInfo method, Expression targetObject, ReadOnlyCollection<Expression> arguments,

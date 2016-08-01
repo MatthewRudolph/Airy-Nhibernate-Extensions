@@ -284,7 +284,7 @@ namespace Dematt.Airy.Tests.NodaTime
                 // Build and the mappings for the test domain entities.
                 _configuration.AddMapping(domainMapper.CompileMappingFor(domainTypes));
 
-                _configuration.LinqToHqlGeneratorsRegistry<LinqToHqlGeneratorsRegistry>();
+                _configuration.LinqToHqlGeneratorsRegistry<LinqToHqlRegisterNodaTime>();
 
                 _configuration.DataBaseIntegration(x =>
                 {
