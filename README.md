@@ -4,9 +4,10 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/x9ed1fnac4pllcd7/branch/dev?svg=true&passingText=dev%20-%20passing&failingText=dev%20-%20failing&pendingText=dev%20-%20pending)](https://ci.appveyor.com/project/MatthewRudolph/airy-nhibernate-extensions/branch/dev)
 
 ## About ##
-Provides Noda Time support for NHibernate.  
+Seperate libraries that provide Noda Time and Noda Money support for NHibernate.  
 NHibenrate Custom UserType and Custom CompositeUserType implementations of the NodaTime classes and structures.  
-Allows the use of the Noda Time classes and structures in Domain or POCO objects when using NHibernate for data access.
+NHibenrate Custom CompositeUserType implementations of the NodaMoney classes and structures.  
+Allows the use of the Noda Time and Noda Money classes and structures in Domain or POCO objects when using NHibernate for data access.
 
 ## Features ##
 ### Supported Databases ###
@@ -43,8 +44,14 @@ Allows the use of the Noda Time classes and structures in Domain or POCO objects
       + Column1: datetimeoffset(7) (Stores the DateTime and Offset)  
       + Column2: nvarchar(35) (Stores the Tzdb DateTimeZone Id)  
 
+### Supported NodaMoney Types ###
+  + **Money**  
+    + Implemented by MoneyType stored as  
+      + Column1: decimal (Stores the Amount)  
+      + Column2: nvarchar(3) (Stores Currency Code)  
+
 ## Quick Start ##
-### NHibernate ###
+### NHibernate with NodaTime ###
 
 Install using nuget.
 ```Powershell
@@ -110,7 +117,73 @@ var _configuration = new Configuration();
 _configuration.AddMapping(modelMapper.CompileMappingFor(myEntities));
 
 /// Optional add the linq extension to allow querying by ZonedDateTime.ToDateTimeOffset()
-_configuration.LinqToHqlGeneratorsRegistry<LinqToHqlGeneratorsRegistry>();
+_configuration.LinqToHqlGeneratorsRegistry<LinqToHqlRegisterNodaTime>();
+
+var factory = configuration.BuildSessionFactory();
+var session = factory.OpenSession();
+```
+
+For other examples please see the tests.
+
+## Quick Start ##
+### NHibernate with NodaMoney ###
+
+Install using nuget.
+```Powershell
+Install-Package Dematt.Airy.Nhibernate.NodaMoney
+```
+
+Given the following class to map.
+```C#
+    public class MoneyTestEntity    
+    {
+        public virtual Guid Id { get; set; }    
+
+        public virtual string Description { get; set; }
+
+        public virtual Money Cost { get; set; }
+
+        public virtual Money? Retail { get; set; }
+    }
+```
+
+The mapping code would look like this.
+```C#
+var myEntities = new [] {
+    typeof(MoneyTestEntity)
+};
+
+var modelMapper = new ModelMapper();
+modelMapper.Class<MoneyTestEntity>(c =>
+{
+    c.Id(p => p.Id, m =>
+    {
+        m.Generator(Generators.GuidComb);
+    });
+    c.Property(p => p.Description, m =>
+    {
+        m.Length(100);
+    });
+    c.Property(p => p.Cost, m =>
+    {
+        m.Type<MoneyType>();
+        m.Columns(f => f.Name("CostAmount"), f => f.Name("CostCurrency"));
+    });
+    c.Property(p => p.Retail, m =>
+    {
+        m.Type<MoneyType>();
+        m.Columns(f => f.Name("RetailAmount"), f => f.Name("RetailCurrency"));
+    });
+});
+
+var _configuration = new Configuration();
+_configuration.AddMapping(modelMapper.CompileMappingFor(myEntities));
+
+/// Optional add the Linq extension to allow querying by:
+/// Money.Amount            //*Existing property*//
+/// Money.ToAmount()        //*Extension method*//
+/// Money.ToCurrencyCode()  //*Extension method*//
+_configuration.LinqToHqlGeneratorsRegistry<LinqToHqlRegisterMoney>();
 
 var factory = configuration.BuildSessionFactory();
 var session = factory.OpenSession();
@@ -126,6 +199,9 @@ Jon Skeet and the other people that work on the NodaTime project.
 This stackoverflow post that got me started on this project when I was looking at the best way to store NodaTime structs.
   + http://stackoverflow.com/questions/34452792/using-offsetdatetime-with-nhibernate
   + https://gist.github.com/chilversc/d1ba1fdbae58d8a13704
+
+The NodaMoney Project.
+  + https://github.com/remyvd/NodaMoney
 
 ##Caveats##
 As noted by the NodaTime project, dates and times are a complicated and extremely difficult area in which to handle all cases correctly.
