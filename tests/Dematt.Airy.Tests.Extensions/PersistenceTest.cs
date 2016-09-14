@@ -1,5 +1,4 @@
-﻿using Dematt.Airy.Tests.Extensions.Entities;
-using NHibernate;
+﻿using NHibernate;
 using NUnit.Framework;
 
 namespace Dematt.Airy.Tests.Extensions

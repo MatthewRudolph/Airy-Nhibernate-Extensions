@@ -1,5 +1,4 @@
-﻿using Dematt.Airy.Tests.Extensions.Entities;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Dematt.Airy.Tests.Extensions
 {

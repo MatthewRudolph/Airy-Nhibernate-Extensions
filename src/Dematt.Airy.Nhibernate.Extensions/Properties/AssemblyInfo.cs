@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Dematt.Airy.Nhibernate.Extensions")]
-[assembly: AssemblyDescription("Custom User Types, Composite User Types and other extensions for Nhibernate.")]
+[assembly: AssemblyDescription("Custom User Types, Composite User Types, Mapper Helpers and Linq Extensions for NHibernate.")]
 [assembly: AssemblyCompany("Matthew Rudolph")]
 [assembly: AssemblyProduct("Dematt.Airy.Nhibernate.Extensions")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
