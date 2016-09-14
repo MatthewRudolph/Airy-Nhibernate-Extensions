@@ -1,0 +1,32 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/MatthewRudolph/Airy-Nhibernate-Extensions/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/MatthewRudolph/Airy-Nhibernate-Extensions</projectUrl>
+    <iconUrl>https://raw.github.com/MatthewRudolph/Airy-Nhibernate-Extensions/master/AiryNugetIcon128x128.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>"Provides Custom User Types, Composite User Types, Mapper Helpers and Linq Extensions for NHibernate.</description>
+    <summary>
+      NHibernate Composite User Type for the DateTimeOffset struct:
+      Allows database such as SQLite that do not natively support the DateTimeOffset data type to store it in two separate columns one for the date and time and another for the offset.
+      Model Mapper static helper class:
+      Allows easy configuration of a mapper to apply the above DateTimeOffset Composite User Type to all properties that are of type DateTimeOffset.
+      Allows a mapper to be set to ignore of abstract classes.
+      Linq extension that allows the use of object.IsNotNull() extension method to be mapped the native database is not null check when testing for child nullable entities.
+    </summary>
+    <releaseNotes>Release Summary: https://github.com/MatthewRudolph/Airy-Nhibernate-Extensions/blob/master/ReleaseNotes.txt </releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>NHibernate Linq DateTimeOffset Extension</tags>
+    <dependencies>
+
+      <!-- For Nhibernate we are OK with anything greater than the current 4.0 release, but for safety not any future 5.0 releases. -->
+      <dependency id="NHibernate" version="[4.0.4.4000,5)" />
+
+    </dependencies>
+  </metadata>
+</package>
