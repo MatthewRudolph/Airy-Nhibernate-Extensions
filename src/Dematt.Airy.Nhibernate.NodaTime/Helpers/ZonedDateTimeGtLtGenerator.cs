@@ -12,9 +12,16 @@ using NodaTime;
 
 namespace Dematt.Airy.Nhibernate.NodaTime.Helpers
 {
+    /// <summary>
+    /// Class that extends the NHiberate Linq Provider to allow the ZonedDateTime.ToDateTimeOffset() method to be used in Linq queries.
+    /// </summary>
+    /// <remarks>Use the <see cref="LinqToHqlRegisterNodaTime"/> class to register this generator with Nhibernate.</remarks>
     [SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
     public class ZonedDateTimeGtLtGenerator : BaseHqlGeneratorForMethod
     {
+        /// <summary>
+        /// Gets the methods that are supported by this Linq extension.
+        /// </summary>
         private static readonly HashSet<MethodInfo> ActingMethods = new HashSet<MethodInfo>
         {
             // The method calls are used only to get info about the signature, any parameters are just ignored.
@@ -26,6 +33,9 @@ namespace Dematt.Airy.Nhibernate.NodaTime.Helpers
             //ReflectionHelper.GetMethodDefinition<ZonedDateTime>(x => x.CompareTo(x))
         };
 
+        /// <summary>
+        /// Constructor sets the supported properties.
+        /// </summary>
         public ZonedDateTimeGtLtGenerator()
         {
             SupportedMethods = ActingMethods.ToArray();
@@ -34,6 +44,9 @@ namespace Dematt.Airy.Nhibernate.NodaTime.Helpers
             //SupportedMethods = typeof(ZonedDateTime).GetMethods().Where(m => m.Name.Contains("Than")).ToArray();
         }
 
+        /// <summary>
+        /// Overrides the BuildHql method to add an expression that supports Linq querying using the supported methods.
+        /// </summary>
         public override HqlTreeNode BuildHql(MethodInfo method, Expression targetObject, ReadOnlyCollection<Expression> arguments,
             HqlTreeBuilder treeBuilder, IHqlExpressionVisitor visitor)
         {

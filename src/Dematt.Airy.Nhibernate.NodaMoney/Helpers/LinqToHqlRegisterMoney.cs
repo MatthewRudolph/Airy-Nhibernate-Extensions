@@ -6,12 +6,12 @@ namespace Dematt.Airy.Nhibernate.NodaMoney.Helpers
     /// Registers the Linq to Hql Generators used to extend the NHibernate Linq Provider to help support improved Linq querying of the Money type.
     /// </summary>    
     ///<remarks>
-    /// <![CDATA[Use configuration.LinqToHqlGeneratorsRegistry<LinqToHqlGeneratorsRegistry>() to register this when building a SessionFactory.]]>
+    /// <![CDATA[Use configuration.LinqToHqlGeneratorsRegistry<LinqToHqlRegisterMoney>() to register this when building a SessionFactory.]]>
     /// </remarks>
     public class LinqToHqlRegisterMoney : DefaultLinqToHqlGeneratorsRegistry
     {
         /// <summary>
-        /// Constructor the registers the required Nhibernate Linq to Hql Generators for the Money type.
+        /// Constructor that registers the required Nhibernate Linq to Hql Generators for the NodaMoney type.
         /// </summary>
         public LinqToHqlRegisterMoney()
         {
