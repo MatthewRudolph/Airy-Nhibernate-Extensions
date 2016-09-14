@@ -251,7 +251,7 @@ var factory = configuration.BuildSessionFactory();
 var session = factory.OpenSession();
 ```
 
-To automatically map all DateTimeOffset properties of entites in the mapping:
+Alternatively to automatically map all DateTimeOffset properties of entites in the mapping:
 The mapping code would look like this.
 ```C#
 var myEntities = new [] {
@@ -279,7 +279,10 @@ var factory = configuration.BuildSessionFactory();
 var session = factory.OpenSession();
 ```
 
-To allow the use of the object.IsNotNull() extension method to be used with linq register in the configuration:
+To allow the use of the object.IsNotNull() extension method to be used with linq register in the configuration.
+Details of why you might want to do this are in this blog post and stackoverflow question:
+  + http://jahav.com/blog/nhibernate-linq-query-evaluation-process/
+  + http://stackoverflow.com/questions/32215679/checking-for-reference-entity-being-null-in-select-projects-all-columns-in
 ```C#
 var myEntities = new [] {
     typeof(DateTimeOffsetTestEntity)
@@ -289,12 +292,12 @@ var modelMapper = new ModelMapper();
 var _configuration = new Configuration();
 _configuration.AddMapping(modelMapper.CompileMappingFor(myEntities));
 
+// This lines adds the Linq support for the IsNotNull() method.
 _configuration.LinqToHqlGeneratorsRegistry<LinqToHqlRegisterIsNotNull>();
 
 var factory = configuration.BuildSessionFactory();
 var session = factory.OpenSession();
 ```
-
 
 ## Acknowledgements ##
 Jon Skeet and the other people that work on the NodaTime project.
