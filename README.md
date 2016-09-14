@@ -193,6 +193,109 @@ var session = factory.OpenSession();
 
 For other examples please see the tests.
 
+## Quick Start ##
+### NHibernate Extensions ###
+
+Install using nuget.
+```Powershell
+Install-Package Dematt.Airy.Nhibernate.Extensions
+```
+
+Given the following class with DateTimeOffset properties to map to a database without native support for the DateTimeOffset type.
+```C#
+    public class DateTimeOffsetTestEntity    
+    {
+        public virtual Guid Id { get; set; }    
+
+        public virtual string Description { get; set; }
+
+        public virtual DateTimeOffset Start { get; set; }
+
+        public virtual DateTimeOffset? Finish { get; set; }
+    }
+```
+
+The mapping code would look like this.
+```C#
+var myEntities = new [] {
+    typeof(DateTimeOffsetTestEntity)
+};
+
+var modelMapper = new ModelMapper();
+modelMapper.Class<DateTimeOffsetTestEntity>(c =>
+{
+    c.Id(p => p.Id, m =>
+    {
+        m.Generator(Generators.GuidComb);
+    });
+    c.Property(p => p.Description, m =>
+    {
+        m.Length(100);
+    });
+    c.Property(p => p.Start, m =>
+    {
+        m.Type<DateTimeOffsetSplitType>();
+        m.Columns(f => f.Name("StartDateTime"), f => f.Name("StartOffset"));
+    });
+    c.Property(p => p.Finish, m =>
+    {
+        m.Type<DateTimeOffsetSplitType>();
+        m.Columns(f => f.Name("FinishDateTime"), f => f.Name("FinishOffset"));
+    });
+});
+
+var _configuration = new Configuration();
+_configuration.AddMapping(modelMapper.CompileMappingFor(myEntities));
+
+var factory = configuration.BuildSessionFactory();
+var session = factory.OpenSession();
+```
+
+To automatically map all DateTimeOffset properties of entites in the mapping:
+The mapping code would look like this.
+```C#
+var myEntities = new [] {
+    typeof(DateTimeOffsetTestEntity)
+};
+
+var modelMapper = new ModelMapper();
+modelMapper.Class<DateTimeOffsetTestEntity>(c =>
+{
+    c.Id(p => p.Id, m =>
+    {
+        m.Generator(Generators.GuidComb);
+    });
+    c.Property(p => p.Description, m =>
+    {
+        m.Length(100);
+    });
+});
+modelMapper.BeforeMapProperty += ModelMapperHelper.ApplyDateTimeOffsetSplitTypeToDateTimeOffset;
+
+var _configuration = new Configuration();
+_configuration.AddMapping(modelMapper.CompileMappingFor(myEntities));
+
+var factory = configuration.BuildSessionFactory();
+var session = factory.OpenSession();
+```
+
+To allow the use of the object.IsNotNull() extension method to be used with linq register in the configuration:
+```C#
+var myEntities = new [] {
+    typeof(DateTimeOffsetTestEntity)
+};
+
+var modelMapper = new ModelMapper();
+var _configuration = new Configuration();
+_configuration.AddMapping(modelMapper.CompileMappingFor(myEntities));
+
+_configuration.LinqToHqlGeneratorsRegistry<LinqToHqlRegisterIsNotNull>();
+
+var factory = configuration.BuildSessionFactory();
+var session = factory.OpenSession();
+```
+
+
 ## Acknowledgements ##
 Jon Skeet and the other people that work on the NodaTime project.
   + http://nodatime.org/
