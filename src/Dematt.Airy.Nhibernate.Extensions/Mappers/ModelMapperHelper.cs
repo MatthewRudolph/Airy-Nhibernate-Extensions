@@ -14,7 +14,7 @@ namespace Dematt.Airy.Nhibernate.Extensions.Mappers
         /// </summary>
         /// <remarks>
         /// Allows the use of <see cref="DateTimeOffset"/> type with databases that do not natively support it.
-        /// User: mapper.BeforeMapProperty += ModelMapperHelper.ApplyDateTimeOffsetSplitTypeToDateTimeOffset
+        /// Example usage: mapper.BeforeMapProperty += ModelMapperHelper.ApplyDateTimeOffsetSplitTypeToDateTimeOffset
         /// </remarks>
         public static void ApplyDateTimeOffsetSplitTypeToDateTimeOffset(IModelInspector inspector, PropertyPath property, IPropertyMapper mapper)
         {
@@ -31,7 +31,7 @@ namespace Dematt.Airy.Nhibernate.Extensions.Mappers
         /// Instructs the mapper to set all Abstract classes as root entities.
         /// </summary>
         /// <remarks>
-        /// mapper.IsRootEntity(ModelMapperHelper.ApplyAbstractClassesAsRootEntites);
+        /// Example usage: mapper.IsRootEntity(ModelMapperHelper.ApplyAbstractClassesAsRootEntites);
         /// </remarks>
         public static bool ApplyAbstractClassesAsRootEntites(Type type, bool declared)
         {
