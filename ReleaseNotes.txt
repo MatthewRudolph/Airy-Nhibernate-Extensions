@@ -1,3 +1,19 @@
+Release v2.1.0
+=============================
+
+## Features ##
+    **Dematt.Airy.Nhibernate.NodaTime**
+      * None
+
+    **Dematt.Airy.Nhibernate.NodaMoney**
+      * None
+
+    **Dematt.Airy.Nhibernate.Extensions**
+      * DateTimeOffsetSplitType to support the use of the DateTimeOffset data type with databases that do not have native support for it.
+      * object.IsNotNull extension method and NHibernate Linq provider extension to recognize the method as something that can be performed in the database, 
+        replacing the load of a whole entity to check for null with an single extra column in query.
+
+
 Release v2.0.0
 =============================
 
