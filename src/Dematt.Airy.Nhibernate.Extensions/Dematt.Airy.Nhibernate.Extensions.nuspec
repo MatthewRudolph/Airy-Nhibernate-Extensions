@@ -18,7 +18,7 @@
       
       - Model Mapper static helper class:
           Allows easy configuration of a mapper to apply the above DateTimeOffset Composite User Type to all properties that are of type DateTimeOffset.
-          Allows a mapper to be set to ignore of abstract classes.
+          Allows a mapper to be set to ignore abstract classes.
       
       - Linq extension that allows the use of object.IsNotNull() extension method to be mapped the native database is not null check when testing for child nullable entities.
     </description>
