@@ -11,7 +11,7 @@ namespace Dematt.Airy.Nhibernate.Extensions.Linq
     public class LinqToHqlRegisterIsNotNull : DefaultLinqToHqlGeneratorsRegistry
     {
         /// <summary>
-        /// Constructor that registers the required Nhibernate Linq to Hql Generators for the Money type.
+        /// Constructor that registers the required Nhibernate Linq to Hql Generators for object.IsNotNull() extension method.
         /// </summary>
         public LinqToHqlRegisterIsNotNull()
         {

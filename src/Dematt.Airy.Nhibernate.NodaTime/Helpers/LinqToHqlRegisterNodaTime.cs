@@ -7,7 +7,7 @@ namespace Dematt.Airy.Nhibernate.NodaTime.Helpers
     /// </summary>    
     ///<remarks>
     /// <![CDATA[Use configuration.LinqToHqlGeneratorsRegistry<LinqToHqlRegisterNodaTime>() to register this when building a SessionFactory.]]>
-    /// </remarks>    
+    /// </remarks>
     public class LinqToHqlRegisterNodaTime : DefaultLinqToHqlGeneratorsRegistry
     {
         /// <summary>
