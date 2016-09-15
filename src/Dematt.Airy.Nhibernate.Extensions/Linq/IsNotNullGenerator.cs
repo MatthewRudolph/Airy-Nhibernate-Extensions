@@ -11,7 +11,7 @@ namespace Dematt.Airy.Nhibernate.Extensions.Linq
 
     /// <summary>
     /// Class that extends the NHiberate Linq Provider to allow the object.IsNotNull() extension method to be used in Linq queries
-    /// and recognize the method as a something that can be performed in the database, 
+    /// and recognize the method as something that can be performed in the database, 
     /// replacing the load of a whole entity to check for null with an single extra column in query
     /// </summary>
     /// <remarks>Use the <see cref="LinqToHqlRegisterIsNotNull"/> class to register this generator with Nhibernate.</remarks>
