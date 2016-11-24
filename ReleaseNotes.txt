@@ -1,3 +1,18 @@
+Release v2.2.0
+=============================
+
+## Features ##
+    **Dematt.Airy.Nhibernate.NodaTime**
+      * None
+
+    **Dematt.Airy.Nhibernate.NodaMoney**
+      * Added support for Noda.Money version 1.0.0
+      * Updated nuget dependencies to allow all NodaMoney version greater than or equal to 0.6.0 and less then 2.0.0 (i.e. The old 0.6.0 version and all new 1.x.x versions).
+
+    **Dematt.Airy.Nhibernate.Extensions**
+      * None
+
+
 Release v2.1.0
 =============================
 
