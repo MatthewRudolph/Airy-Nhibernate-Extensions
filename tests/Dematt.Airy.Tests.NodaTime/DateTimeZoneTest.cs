@@ -23,10 +23,7 @@ namespace Dematt.Airy.Tests.NodaTime
             const int idFieldSize = 35;
             var tzdbTimeZones = DateTimeZoneProviders.Tzdb.Ids;
             var longestTzdb = tzdbTimeZones.Aggregate("", (max, cur) => max.Length > cur.Length ? max : cur);
-            var bclTimeZones = DateTimeZoneProviders.Bcl.Ids;
-            var longestBcl = bclTimeZones.Aggregate("", (max, cur) => max.Length > cur.Length ? max : cur);
             Assert.That(longestTzdb.Length, Is.LessThan(idFieldSize));
-            Assert.That(longestBcl.Length, Is.LessThan(idFieldSize));
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Data.Common;
 using Dematt.Airy.Nhibernate.NodaTime.Extensions;
 using NHibernate;
 using NHibernate.Engine;
@@ -27,7 +28,7 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         /// <param name="session">The session</param>
         /// <param name="owner">The containing entity</param>
         /// <returns>An instance of the <see cref="DateTimeOffset"/> class or null.</returns>
-        public object NullSafeGet(IDataReader dr, string[] names, ISessionImplementor session, object owner)
+        public object NullSafeGet(DbDataReader dr, string[] names, ISessionImplementor session, object owner)
         {
             var dateTimeOffset = (DateTimeOffset?)NHibernateUtil.DateTimeOffset.NullSafeGet(dr, names[0], session, owner);
             var timeZone = (string)NHibernateUtil.String.NullSafeGet(dr, names[1], session, owner);

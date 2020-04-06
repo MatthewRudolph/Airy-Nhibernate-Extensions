@@ -37,7 +37,7 @@ namespace Dematt.Airy.Nhibernate.NodaTime
                 return null;
             }
 
-            return dateTimeOffset.ToZonedDateTime(DateTimeZoneProviders.Bcl.GetZoneOrNull(timeZone));
+            return dateTimeOffset.ToZonedDateTime(DateTimeZoneProviders.Tzdb.GetZoneOrNull(timeZone));
         }
     }
 }
