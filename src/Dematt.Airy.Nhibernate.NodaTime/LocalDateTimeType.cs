@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data;
+using System.Data.Common;
 using NHibernate;
+using NHibernate.Engine;
 using NHibernate.SqlTypes;
 using NHibernate.UserTypes;
 using NodaTime;
@@ -48,9 +50,9 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         /// <param name="rs">An IDataReader.</param>
         /// <param name="names">The column names.</param>
         /// <param name="owner">The containing entity.</param>        
-        public object NullSafeGet(IDataReader rs, string[] names, object owner)
+        public object NullSafeGet(DbDataReader rs, string[] names, ISessionImplementor session, object owner)
         {
-            var value = NHibernateUtil.DateTime2.NullSafeGet(rs, names);
+            var value = NHibernateUtil.DateTime.NullSafeGet(rs, names, session);
             if (value == null)
             {
                 return null;
@@ -66,7 +68,7 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         /// <param name="cmd">The command used for writing the value.</param>
         /// <param name="value">The value to write.</param>
         /// <param name="index">The parameters index to start at.</param>
-        public void NullSafeSet(IDbCommand cmd, object value, int index)
+        public void NullSafeSet(DbCommand cmd, object value, int index, ISessionImplementor session)
         {
             // We have to cast to SqlParameter instead of IDataParameter because...
             // The MS data provider takes the DbType of DbType.Time to be DateTime not TimeSpan.

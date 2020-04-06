@@ -23,7 +23,7 @@ namespace Dematt.Airy.Tests.NodaTime
             using (ITransaction transaction = session.BeginTransaction())
             {
                 var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
-                LocalTime startLocalTime = TestClock.Now.InZone(timeZone).TimeOfDay;
+                LocalTime startLocalTime = TestClock.GetCurrentInstant().InZone(timeZone).TimeOfDay;
                 var testEvent = new LocalTimeTestEntity
                 {
                     Description = "Can_Write_LocalTime_Stored_As_Time",
@@ -42,7 +42,7 @@ namespace Dematt.Airy.Tests.NodaTime
         public void Can_Write_And_Read_LocalTime_Stored_As_Time()
         {
             var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
-            LocalTime startLocalTime = TestClock.Now.InZone(timeZone).TimeOfDay;
+            LocalTime startLocalTime = TestClock.GetCurrentInstant().InZone(timeZone).TimeOfDay;
             LocalTime finishLocalTime = startLocalTime.PlusHours(1);
             var testEvent = new LocalTimeTestEntity
             {
@@ -78,7 +78,7 @@ namespace Dematt.Airy.Tests.NodaTime
         public void Can_Write_And_Read_A_Null_LocalTime_Stored_As_Time()
         {
             var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
-            LocalTime startLocalTime = TestClock.Now.InZone(timeZone).TimeOfDay;
+            LocalTime startLocalTime = TestClock.GetCurrentInstant().InZone(timeZone).TimeOfDay;
             var testEvent = new LocalTimeTestEntity
             {
                 Description = "Can_Write_And_Read_A_Null_LocalTime_Stored_As_Time",
@@ -112,7 +112,7 @@ namespace Dematt.Airy.Tests.NodaTime
         public void Can_Query_By_Equals_LocalTime_Stored_As_Time()
         {
             var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
-            LocalTime startLocalTime = TestClock.Now.InZone(timeZone).TimeOfDay;
+            LocalTime startLocalTime = TestClock.GetCurrentInstant().InZone(timeZone).TimeOfDay;
             LocalTime finishLocalTime = startLocalTime.PlusHours(1);
             var testEvent = new LocalTimeTestEntity
             {
@@ -157,7 +157,7 @@ namespace Dematt.Airy.Tests.NodaTime
         public void Can_Query_By_LessThan_LocalTime_Stored_As_Time()
         {
             var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
-            LocalTime startLocalTime = TestClock.Now.InZone(timeZone).TimeOfDay.Minus(Period.FromHours(1));
+            LocalTime startLocalTime = TestClock.GetCurrentInstant().InZone(timeZone).TimeOfDay.Minus(Period.FromHours(1));
             LocalTime finishLocalTime = startLocalTime.PlusHours(3);
             var testEvent = new LocalTimeTestEntity
             {
@@ -204,7 +204,7 @@ namespace Dematt.Airy.Tests.NodaTime
         public void Can_Query_By_GreaterThan_LocalTime_Stored_As_Time()
         {
             var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
-            LocalTime startLocalTime = TestClock.Now.InZone(timeZone).TimeOfDay.Plus(Period.FromHours(1));
+            LocalTime startLocalTime = TestClock.GetCurrentInstant().InZone(timeZone).TimeOfDay.Plus(Period.FromHours(1));
             LocalTime finishLocalTime = startLocalTime.PlusHours(3);
             var testEvent = new LocalTimeTestEntity
             {

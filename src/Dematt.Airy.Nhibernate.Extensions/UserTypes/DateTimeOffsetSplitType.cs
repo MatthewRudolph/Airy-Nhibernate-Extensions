@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using NHibernate;
 using NHibernate.Engine;
@@ -22,10 +23,7 @@ namespace Dematt.Airy.Nhibernate.Extensions.UserTypes
         /// </summary>
         public bool IsMutable
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
 
         /// <summary>
@@ -33,10 +31,7 @@ namespace Dematt.Airy.Nhibernate.Extensions.UserTypes
         /// </summary>
         public string[] PropertyNames
         {
-            get
-            {
-                return new[] { "DateTime", "Offset" };
-            }
+            get { return new[] { "DateTime", "Offset" }; }
         }
 
         /// <summary>
@@ -44,10 +39,7 @@ namespace Dematt.Airy.Nhibernate.Extensions.UserTypes
         /// </summary>
         public IType[] PropertyTypes
         {
-            get
-            {
-                return new IType[] { NHibernateUtil.DateTime, NHibernateUtil.Int32 };
-            }
+            get { return new IType[] { NHibernateUtil.DateTime, NHibernateUtil.Int32 }; }
         }
 
         /// <summary>
@@ -55,10 +47,7 @@ namespace Dematt.Airy.Nhibernate.Extensions.UserTypes
         /// </summary>
         public Type ReturnedClass
         {
-            get
-            {
-                return typeof(DateTimeOffset?);
-            }
+            get { return typeof(DateTimeOffset?); }
         }
 
         /// <summary>
@@ -94,7 +83,8 @@ namespace Dematt.Airy.Nhibernate.Extensions.UserTypes
         /// <param name="value">The value to set.</param>
         public void SetPropertyValue(object component, int property, object value)
         {
-            throw new InvalidOperationException("DateTimeOffset is an immutable object. SetPropertyValue isn't supported.");
+            throw new InvalidOperationException(
+                "DateTimeOffset is an immutable object. SetPropertyValue isn't supported.");
         }
 
         /// <summary>
@@ -104,7 +94,8 @@ namespace Dematt.Airy.Nhibernate.Extensions.UserTypes
         /// <param name="x">The first object to compare.</param>
         /// <param name="y">The second object to compare.</param>
         /// <returns>true if the objects are considered equal; otherwise, false. If both x and y are null, the method returns true.</returns>
-        [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1503:CurlyBracketsMustNotBeOmitted", Justification = "Reviewed. Suppression is OK here.")]
+        [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1503:CurlyBracketsMustNotBeOmitted",
+            Justification = "Reviewed. Suppression is OK here.")]
         public new bool Equals(object x, object y)
         {
             if (x == y) return true;
@@ -130,17 +121,17 @@ namespace Dematt.Airy.Nhibernate.Extensions.UserTypes
         /// <param name="session">The session</param>
         /// <param name="owner">The containing entity</param>
         /// <returns>An instance of the <see cref="DateTimeOffset"/> class or null.</returns>
-        public object NullSafeGet(IDataReader dr, string[] names, ISessionImplementor session, object owner)
+        public object NullSafeGet(DbDataReader dr, string[] names, ISessionImplementor session, object owner)
         {
-            var dateTime = NHibernateUtil.DateTime.NullSafeGet(dr, names[0]);
-            var offset = NHibernateUtil.Int32.NullSafeGet(dr, names[1]);
+            var dateTime = NHibernateUtil.DateTime.NullSafeGet(dr, names[0], session);
+            var offset = NHibernateUtil.Int32.NullSafeGet(dr, names[1], session);
             if (dateTime == null)
             {
                 return null;
             }
 
-            var timeSpan = offset == null ? new TimeSpan(0, 0, 0) : new TimeSpan(0, (int)offset, 0);
-            return new DateTimeOffset((DateTime)dateTime, timeSpan);
+            var timeSpan = offset == null ? new TimeSpan(0, 0, 0) : new TimeSpan(0, (int) offset, 0);
+            return new DateTimeOffset((DateTime) dateTime, timeSpan);
         }
 
         /// <summary>
@@ -153,20 +144,20 @@ namespace Dematt.Airy.Nhibernate.Extensions.UserTypes
         /// <param name="index">The parameters index to start at.</param>
         /// <param name="settable">Array indicating which properties are settable</param>
         /// <param name="session">The session.</param>
-        public void NullSafeSet(IDbCommand cmd, object value, int index, bool[] settable, ISessionImplementor session)
+        public void NullSafeSet(DbCommand cmd, object value, int index, bool[] settable, ISessionImplementor session)
         {
             if (value == null)
             {
-                ((IDataParameter)cmd.Parameters[index]).Value = DBNull.Value;
-                ((IDataParameter)cmd.Parameters[index + 1]).Value = DBNull.Value;
+                ((IDataParameter) cmd.Parameters[index]).Value = DBNull.Value;
+                ((IDataParameter) cmd.Parameters[index + 1]).Value = DBNull.Value;
             }
             else
             {
                 var dateTimeOffset = AsDateTimeOffset(value);
-                ((IDataParameter)cmd.Parameters[index]).Value =
-                    dateTimeOffset == null ? DBNull.Value : (object)dateTimeOffset.Value.DateTime;
-                ((IDataParameter)cmd.Parameters[index + 1]).Value =
-                    dateTimeOffset == null ? DBNull.Value : (object)dateTimeOffset.Value.Offset.TotalMinutes;
+                ((IDataParameter) cmd.Parameters[index]).Value =
+                    dateTimeOffset == null ? DBNull.Value : (object) dateTimeOffset.Value.DateTime;
+                ((IDataParameter) cmd.Parameters[index + 1]).Value =
+                    dateTimeOffset == null ? DBNull.Value : (object) dateTimeOffset.Value.Offset.TotalMinutes;
             }
         }
 
@@ -182,7 +173,7 @@ namespace Dematt.Airy.Nhibernate.Extensions.UserTypes
                 return null;
             }
 
-            return new DateTimeOffset(((DateTimeOffset)value).DateTime, ((DateTimeOffset)value).Offset);
+            return new DateTimeOffset(((DateTimeOffset) value).DateTime, ((DateTimeOffset) value).Offset);
         }
 
         /// <summary>

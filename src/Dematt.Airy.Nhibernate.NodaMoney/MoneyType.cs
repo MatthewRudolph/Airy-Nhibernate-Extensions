@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Data.Common;
 using NHibernate;
 using NHibernate.Engine;
 using NHibernate.Type;
@@ -123,12 +124,12 @@ namespace Dematt.Airy.Nhibernate.NodaMoney
         /// <param name="index">The parameters index to start at.</param>
         /// <param name="settable">Array indicating which properties are settable</param>
         /// <param name="session">The session.</param>
-        public void NullSafeSet(IDbCommand cmd, object value, int index, bool[] settable, ISessionImplementor session)
+        public void NullSafeSet(DbCommand cmd, object value, int index, bool[] settable, ISessionImplementor session)
         {
             if (value == null)
             {
-                NHibernateUtil.Decimal.NullSafeSet(cmd, null, index);
-                NHibernateUtil.String.NullSafeSet(cmd, null, index + 1);
+                NHibernateUtil.Decimal.NullSafeSet(cmd, null, index, session);
+                NHibernateUtil.String.NullSafeSet(cmd, null, index + 1, session);
             }
             else
             {
@@ -147,7 +148,7 @@ namespace Dematt.Airy.Nhibernate.NodaMoney
         /// <param name="session">The session</param>
         /// <param name="owner">The containing entity</param>
         /// <returns>An instance of the <see cref="DateTimeOffset"/> class or null.</returns>
-        public object NullSafeGet(IDataReader dr, string[] names, ISessionImplementor session, object owner)
+        public object NullSafeGet(DbDataReader dr, string[] names, ISessionImplementor session, object owner)
         {
             var amount = (Decimal?)NHibernateUtil.Decimal.NullSafeGet(dr, names[0], session, owner);
             var currency = (string)NHibernateUtil.String.NullSafeGet(dr, names[1], session, owner);

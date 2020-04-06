@@ -8,6 +8,7 @@ using NHibernate.Hql.Ast;
 using NHibernate.Linq;
 using NHibernate.Linq.Functions;
 using NHibernate.Linq.Visitors;
+using NHibernate.Util;
 using NodaTime;
 
 namespace Dematt.Airy.Nhibernate.NodaTime.Helpers
@@ -25,7 +26,7 @@ namespace Dematt.Airy.Nhibernate.NodaTime.Helpers
         private static readonly HashSet<MethodInfo> ActingMethods = new HashSet<MethodInfo>
         {
             // The method calls are used only to get info about the signature, any parameters are just ignored.
-            ReflectionHelper.GetMethodDefinition<ZonedDateTime>(x => x.ToDateTimeOffset()),
+            ReflectHelper.GetMethodDefinition<ZonedDateTime>(x => x.ToDateTimeOffset()),
             
             // Not sure how to add CompareTo (> , =>, < and <=) to be supported methods.
             // From the NHibernate source of the CompareGenerator class the below should work but it does not,

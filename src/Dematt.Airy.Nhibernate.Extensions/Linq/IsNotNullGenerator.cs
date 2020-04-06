@@ -5,6 +5,7 @@ using NHibernate.Hql.Ast;
 using NHibernate.Linq;
 using NHibernate.Linq.Functions;
 using NHibernate.Linq.Visitors;
+using NHibernate.Util;
 
 namespace Dematt.Airy.Nhibernate.Extensions.Linq
 {
@@ -25,7 +26,7 @@ namespace Dematt.Airy.Nhibernate.Extensions.Linq
             SupportedMethods = new[]
             {
                 // The method calls are used only to get info about the signature, any parameters are just ignored.                
-                ReflectionHelper.GetMethodDefinition<object>(x => x.IsNotNull())
+                ReflectHelper.GetMethodDefinition<object>(x => x.IsNotNull())
             };
         }
 

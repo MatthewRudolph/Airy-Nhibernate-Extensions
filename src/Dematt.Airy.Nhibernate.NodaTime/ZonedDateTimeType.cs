@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Data.Common;
 using NHibernate;
 using NHibernate.Engine;
 using NHibernate.Type;
@@ -97,12 +98,12 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         /// <param name="index">The parameters index to start at.</param>
         /// <param name="settable">Array indicating which properties are settable</param>
         /// <param name="session">The session.</param>
-        public void NullSafeSet(IDbCommand cmd, object value, int index, bool[] settable, ISessionImplementor session)
+        public void NullSafeSet(DbCommand cmd, object value, int index, bool[] settable, ISessionImplementor session)
         {
             if (value == null)
             {
-                NHibernateUtil.DateTimeOffset.NullSafeSet(cmd, null, index);
-                NHibernateUtil.String.NullSafeSet(cmd, null, index + 1);
+                NHibernateUtil.DateTimeOffset.NullSafeSet(cmd, null, index, session);
+                NHibernateUtil.String.NullSafeSet(cmd, null, index + 1, session);
             }
             else
             {

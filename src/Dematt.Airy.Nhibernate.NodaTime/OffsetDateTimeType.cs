@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data;
+using System.Data.Common;
 using NHibernate;
+using NHibernate.Engine;
 using NHibernate.SqlTypes;
 using NHibernate.UserTypes;
 using NodaTime;
@@ -23,33 +25,34 @@ namespace Dematt.Airy.Nhibernate.NodaTime
         {
             if (x == null && y == null) return true;
             if (x == null || y == null) return false;
-            return ((OffsetDateTime)x).ToInstant() == ((OffsetDateTime)y).ToInstant();
+            return ((OffsetDateTime) x).ToInstant() == ((OffsetDateTime) y).ToInstant();
         }
 
         public int GetHashCode(object x)
         {
-            return x == null ? 0 : ((OffsetDateTime)x).ToInstant().GetHashCode();
+            return x == null ? 0 : ((OffsetDateTime) x).ToInstant().GetHashCode();
         }
 
-        public object NullSafeGet(IDataReader rs, string[] names, object owner)
+        public object NullSafeGet(DbDataReader rs, string[] names, ISessionImplementor session, object owner)
         {
-            var value = NHibernateUtil.DateTimeOffset.NullSafeGet(rs, names);
+            var value = NHibernateUtil.DateTimeOffset.NullSafeGet(rs, names, session);
             if (value == null)
             {
                 return null;
             }
-            return OffsetDateTime.FromDateTimeOffset((DateTimeOffset)value);
+
+            return OffsetDateTime.FromDateTimeOffset((DateTimeOffset) value);
         }
 
-        public void NullSafeSet(IDbCommand cmd, object value, int index)
+        public void NullSafeSet(DbCommand cmd, object value, int index, ISessionImplementor session)
         {
             if (value == null)
             {
-                NHibernateUtil.DateTimeOffset.NullSafeSet(cmd, null, index);
+                NHibernateUtil.DateTimeOffset.NullSafeSet(cmd, null, index, session);
             }
             else
             {
-                NHibernateUtil.DateTimeOffset.NullSafeSet(cmd, ((OffsetDateTime)value).ToDateTimeOffset(), index);
+                NHibernateUtil.DateTimeOffset.NullSafeSet(cmd, ((OffsetDateTime) value).ToDateTimeOffset(), index, session);
             }
         }
     }

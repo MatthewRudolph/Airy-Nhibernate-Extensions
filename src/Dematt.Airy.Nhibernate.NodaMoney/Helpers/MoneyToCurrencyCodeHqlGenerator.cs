@@ -7,6 +7,7 @@ using NHibernate.Hql.Ast;
 using NHibernate.Linq;
 using NHibernate.Linq.Functions;
 using NHibernate.Linq.Visitors;
+using NHibernate.Util;
 using NodaMoney;
 
 namespace Dematt.Airy.Nhibernate.NodaMoney.Helpers
@@ -23,7 +24,7 @@ namespace Dematt.Airy.Nhibernate.NodaMoney.Helpers
         private static readonly HashSet<MethodInfo> ActingMethods = new HashSet<MethodInfo>
         {
             // The method calls are used only to get info about the signature, any parameters are just ignored.
-            ReflectionHelper.GetMethodDefinition<Money>(x => x.ToCurrencyCode())            
+            ReflectHelper.GetMethodDefinition<Money>(x => x.ToCurrencyCode())            
         };
 
         /// <summary>
