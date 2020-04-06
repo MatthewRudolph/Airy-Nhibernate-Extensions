@@ -55,7 +55,7 @@ namespace Dematt.Airy.Tests.NodaTime
         public void Can_RoundTrip_A_ZonedDateTime_To_DateTimeOffset_And_Back()
         {
             var systemDateTimeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
-            Instant now = TestClock.Now;
+            Instant now = TestClock.GetCurrentInstant();
             var zonedDateTimeNow = new ZonedDateTime(now, systemDateTimeZone);
             var dateTimeOffsetNow = zonedDateTimeNow.ToDateTimeOffset();
             var zondedDateTimeRoundTripped = dateTimeOffsetNow.ToZonedDateTime(systemDateTimeZone);
@@ -71,7 +71,7 @@ namespace Dematt.Airy.Tests.NodaTime
         public void Can_RoundTrip_A_ZonedDateTime_To_DateTimeOffset_Using_Persistence()
         {
             var systemDateTimeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
-            Instant now = TestClock.Now;
+            Instant now = TestClock.GetCurrentInstant();
             var zonedDateTimeStart = new ZonedDateTime(now, systemDateTimeZone);
             var zonedDateTimeFinish = zonedDateTimeStart.Plus(Duration.FromMinutes(60));
 

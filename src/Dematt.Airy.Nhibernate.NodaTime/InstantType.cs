@@ -36,7 +36,7 @@ namespace Dematt.Airy.Nhibernate.NodaTime
             {
                 return null;
             }
-            return new Instant((long)value);
+            return Instant.FromUnixTimeTicks((long) value);
         }
 
         public void NullSafeSet(IDbCommand cmd, object value, int index)
@@ -47,7 +47,7 @@ namespace Dematt.Airy.Nhibernate.NodaTime
             }
             else
             {
-                NHibernateUtil.Int64.NullSafeSet(cmd, ((Instant)value).Ticks, index);
+                NHibernateUtil.Int64.NullSafeSet(cmd, ((Instant)value).ToUnixTimeTicks(), index);
             }
         }
     }

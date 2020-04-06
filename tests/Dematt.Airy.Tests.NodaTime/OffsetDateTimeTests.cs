@@ -24,7 +24,7 @@ namespace Dematt.Airy.Tests.NodaTime
             using (ITransaction transaction = session.BeginTransaction())
             {
                 var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
-                Instant now = TestClock.Now;
+                Instant now = TestClock.GetCurrentInstant();
                 ZonedDateTime zonedNowDateTime = now.InZone(timeZone);
 
                 var testEvent = new OffsetDateTimeTestEntity
@@ -50,7 +50,7 @@ namespace Dematt.Airy.Tests.NodaTime
             using (ITransaction transaction = session.BeginTransaction())
             {
                 var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
-                Instant now = TestClock.Now;
+                Instant now = TestClock.GetCurrentInstant();
                 ZonedDateTime zonedNowDateTime = now.InZone(timeZone);
                 var zonedFinishDateTime = zonedNowDateTime.Plus(Duration.FromMinutes(60));
 
@@ -76,7 +76,7 @@ namespace Dematt.Airy.Tests.NodaTime
         public void Can_Write_And_Read_OffsetDateTime_Stored_As_DateTimeOffset()
         {
             var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
-            Instant now = TestClock.Now;
+            Instant now = TestClock.GetCurrentInstant();
             ZonedDateTime zonedNowDateTime = now.InZone(timeZone);
             var testEvent = new OffsetDateTimeTestEntity
             {
@@ -120,7 +120,7 @@ namespace Dematt.Airy.Tests.NodaTime
         public void Can_Query_By_Equals_OffsetDateTime_Stored_As_DateTimeOffset()
         {
             var timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
-            Instant now = TestClock.Now;
+            Instant now = TestClock.GetCurrentInstant();
             ZonedDateTime zonedNowDateTime = now.InZone(timeZone);
 
             var zonedFinishDateTime = zonedNowDateTime.Plus(Duration.FromMinutes(60));

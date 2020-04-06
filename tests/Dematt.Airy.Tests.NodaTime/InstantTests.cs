@@ -22,7 +22,7 @@ namespace Dematt.Airy.Tests.NodaTime
             using (ISession session = SessionFactory.OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
             {
-                Instant startInstant = TestClock.Now;
+                Instant startInstant = TestClock.GetCurrentInstant();
                 var testEvent = new InstantTestEntity
                 {
                     Description = "Can_Write_Instant_Stored_As_Int64",
@@ -41,7 +41,7 @@ namespace Dematt.Airy.Tests.NodaTime
         [Test]
         public void Can_Write_And_Read_Instant_Stored_As_Int64()
         {
-            Instant startInstant = TestClock.Now;
+            Instant startInstant = TestClock.GetCurrentInstant();
             var testEvent = new InstantTestEntity
             {
                 Description = "Can_Write_And_Read_Instant_Stored_As_Int64",
@@ -75,7 +75,7 @@ namespace Dematt.Airy.Tests.NodaTime
         [Test]
         public void Can_Write_And_Read_A_Null_Instant_Stored_As_Int64()
         {
-            Instant startInstant = TestClock.Now;
+            Instant startInstant = TestClock.GetCurrentInstant();
             var testEvent = new InstantTestEntity
             {
                 Description = "Can_Write_And_Read_A_Null_Instant_Stored_As_Int64",
@@ -109,7 +109,7 @@ namespace Dematt.Airy.Tests.NodaTime
         [Test]
         public void Can_Query_By_Equals_Instant_Stored_As_Int64()
         {
-            Instant startInstant = TestClock.Now;
+            Instant startInstant = TestClock.GetCurrentInstant();
             Instant finishInstant = startInstant.Plus(Duration.FromHours(1));
             var testEvent = new InstantTestEntity
             {
@@ -153,7 +153,7 @@ namespace Dematt.Airy.Tests.NodaTime
         [Test]
         public void Can_Query_By_LessThan_Instant_Stored_As_Int64()
         {
-            Instant startInstant = TestClock.Now.Minus(Duration.FromHours(24));
+            Instant startInstant = TestClock.GetCurrentInstant().Minus(Duration.FromHours(24));
             Instant finishInstant = startInstant.Plus(Duration.FromHours(1));
             var testEvent = new InstantTestEntity
             {
@@ -199,7 +199,7 @@ namespace Dematt.Airy.Tests.NodaTime
         [Test]
         public void Can_Query_By_MoreThan_Instant_Stored_As_Int64()
         {
-            Instant startInstant = TestClock.Now.Plus(Duration.FromHours(24));
+            Instant startInstant = TestClock.GetCurrentInstant().Plus(Duration.FromHours(24));
             Instant finishInstant = startInstant.Plus(Duration.FromHours(1));
             var testEvent = new InstantTestEntity
             {
